@@ -23,6 +23,15 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > Q. When you open the conflicted readme, what did you get? How did you fix it?
 >
 > A.
+>![Image of Challenge](fig/Lab1_Tutorial1_GitPushIssue.png)
+> What we get is this glorious error message. Essentially, we have a version conflict; the current copy of our file
+> on our local repository no longer matches the file that lives in the remote repository. We have a few options to fix
+> it, including...
+> 1. Delete the file on the Github website.
+> 2. Delete the file on our local machine and pull the newest version to synchronize the versions, then overwrite it and commit the new changes.
+> 3. Force a push. **This is the nuclear option and a really really bad idea™.**
+> 4. Other methods involving branches and merging. 
+
 
 When answering a Question, please include both the question and the answer, as such:
 
