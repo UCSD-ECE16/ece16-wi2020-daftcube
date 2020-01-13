@@ -6,6 +6,9 @@ Date: 01/08/2020 (Happy Birthday to Me)
 ## Tutorials
 ### Tutorial 1:
 
+> #### Blink
+> ![Image of Challenge](fig/Lab1_Blink.gif)
+>
 > Q. What is the frequency of the blink rate in this example? Note that frequency is the inverse of the time it takes for a cycle. A cycle is the time it takes to go HIGH to LOW to HIGH again. Record a video of your FireBeetle blinking.  Make a note of the answer for now, in the next GIT tutorial, you will get a copy of a sample lab report.
 >
 > A. With our definition of cycle, to get the time it takes for the LED to cycle from HIGH to LOW to HIGH again, we take the sum of all of our 'delay()' function
@@ -36,16 +39,50 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > Personally, I picked option 2, but each method I talked about has its use cases.
 
 ### Tutorial 2
-
-
-
-When answering a Question, please include both the question and the answer, as such:
-
->Q. The question verbatim from the lab document
-
->A. Your excellent answer with whatever images and stuff.
+> #### Switch
+> ![Image of Challenge](fig/Lab1_Button.gif)
 >
->and if you need to skip a line, just keep adding > and you will have the same block. 
+> Q. Why do we need a pull-up resistor? Describe the behavior without it.
+> 
+> Todo Answer.
+>
+> ##### Remarks for Switch Exercise
+>
+> I used an LED instead of a wire to bridge my button output to my digital read pin. I made this decision because the LED just fit the breadboard better. While it doesn't light up because the 1000 ohm resistor doesn't allow enough current to create a visible amount of light light, it still completes the circuit and allows the charge to flow.
+> #### External LED Blink
+>
+> ![Image of Challenge](fig/Lab1_BlinkLED.gif)
+>
+> Q. Which GPIO pin did you have to use according to the above setup?
+>
+> According to the diagram, we are using GPIO Pin 26.
+>
+> Q. What is the expected current draw?
+>
+> V = IR 
+>
+> V = [3.3 Volts Provided] - [2.2 Volt Drop over LED]; 
+>
+> V = 1.1 Volts
+> 
+> R = 220 Ω
+>
+> I = ?
+> 
+> 1.1 V = 220 Ω * (I)
+>
+> 1.1 V / 220 Ω = I
+>
+> I = .005 A
+> 
+>  **[[ I = 5 mA ]]**
+>
+> The expected current draw for this circuit is 5 milliamps.
+>
+> Q. What is the limit for the GPIO? You can find this on the ESP32_WROOM datasheet.
+>
+> According to the datasheet, its either 40 milliamps or 20 milliamps. I don't know how to read it. TODO ask in office hours.
+
 
 ## Challenges:
 
