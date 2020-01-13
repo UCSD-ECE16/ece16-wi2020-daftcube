@@ -9,7 +9,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > #### Blink
 > ![Image of Challenge](fig/Lab1_Blink.gif)
 >
-> Q. What is the frequency of the blink rate in this example? Note that frequency is the inverse of the time it takes for a cycle. A cycle is the time it takes to go HIGH to LOW to HIGH again. Record a video of your FireBeetle blinking.  Make a note of the answer for now, in the next GIT tutorial, you will get a copy of a sample lab report.
+> **Q. What is the frequency of the blink rate in this example? Note that frequency is the inverse of the time it takes for a cycle. A cycle is the time it takes to go HIGH to LOW to HIGH again. Record a video of your FireBeetle blinking.  Make a note of the answer for now, in the next GIT tutorial, you will get a copy of a sample lab report.**
 >
 > A. With our definition of cycle, to get the time it takes for the LED to cycle from HIGH to LOW to HIGH again, we take the sum of all of our 'delay()' function
 > arguments. 
@@ -24,7 +24,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > 
 > My previous note has been added to Git.
 
-> Q. When you open the conflicted readme, what did you get? How did you fix it?
+> **Q. When you open the conflicted readme, what did you get? How did you fix it?**
 >
 > A.
 >![Image of Challenge](fig/Lab1_Tutorial1_GitPushIssue.png)
@@ -42,7 +42,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > #### Switch
 > ![Image of Challenge](fig/Lab1_Button.gif)
 >
-> Q. Why do we need a pull-up resistor? Describe the behavior without it.
+> **Q. Why do we need a pull-up resistor? Describe the behavior without it.**
 > 
 > Todo Answer.
 >
@@ -53,11 +53,13 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > ![Image of Challenge](fig/Lab1_BlinkLED.gif)
 >
-> Q. Which GPIO pin did you have to use according to the above setup?
+> **Q. Which GPIO pin did you have to use according to the above setup?**
 >
 > According to the diagram, we are using GPIO Pin 26.
 >
-> Q. What is the expected current draw?
+> **Q. What is the expected current draw?**
+>
+> ![Image of Challenge](fig/Lab1_Tutorial2_BlinkCircuitDiagram.png)
 >
 > V = IR 
 >
@@ -79,9 +81,34 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > The expected current draw for this circuit is 5 milliamps.
 >
-> Q. What is the limit for the GPIO? You can find this on the ESP32_WROOM datasheet.
+> **Q. What is the limit for the GPIO? You can find this on the ESP32_WROOM datasheet.**
 >
 > According to the datasheet, its either 40 milliamps or 20 milliamps. I don't know how to read it. TODO ask in office hours.
+> 
+> #### Serial Port Introduction
+>
+> ![Image of Challenge](fig/Lab1_Tutorial2_SerialMonitor.png)
+>
+> **Q. In your report, run the above code at Baud Rate of 9600. How many seconds are between each Hello World? What did you expect the time between each print statement to be and what did you actually get?** 
+>
+> According to the code, we expected to see the text, "Hello World!!!" appear on the screen every millisecond. Instead, the serial output looked something like the image above, where we receive two "Hello World!!!" messages at a single timestamp with a 4-5 millisecond delay.
+>
+> **Q. How does this change when you change the baud rate to 2400, 4800, and 115200. (When you change the baud rate, you’ll also need to change the Serial Monitor’s Baud Rate. The answer to this question should be quantitative and not just qualitative.  Remember that baud rate refers to how many bytes per second is sent. Remember that an ASCII character is 8 bits.**
+>
+> At the baseline Baud Rate of 9600 bits / second, we received approximately 60 messages every second. There was a minor fluctuation of -1 - +1 messages per second, but was otherwise stable.
+>
+> The size of "Hello World!!!" is 14 bytes, or 112 bits. So, at the baseline, we should expect 9600 bits / (14 bytes * (8 bits / byte)) ~= 85 messages per second. However, we don't see this result. This leads me to believe that the serial protocol has some amount of protocol overhead. We could even see if we can calculate this overhead using shot-in-the-dark algebra.
+> 
+> If we receive 60 messages per second, and our baud rate is 9600, we should expect each message to use roughly 9600 bits / 60 messages = 160 bits / message. If we subtract our payload information size (112 bits) from this, we can see that each message has around 48 bits, or six bytes of overhead. However, we made two Serial.print() calls, so that would bring down our overhead to approximately 3 bytes per message call. Of course, this is all estimation; to know for sure, we should have probably consulted the protocol RFC instead.
+>
+> Moving on, if we decreate the Baud Rate to 4800 bits / second, half of the baseline, we should expect approximately 30 messages given our initial test. And we do get this result, with the same error as before.
+>
+> If we decrease even further to a rate of 2400 bits / second, we should expect a quarter of the baseline because we will be transferring data at a quarter of the rate.
+>
+> If we increase to a rate 115200 bits / second, we should expect to receive twelve times the initial information. However, we don't; we only receive around 72 messages per second, with most of them coming in at the same timestampe. This could be because the Serial bus on the board doesn't have enough throughput and is being overwhelmed, or it could be that my machine isn't polling for new packets fast enough. Either way, we see diminishing returns with our current setup. 
+>
+> And, of course, if we change the baud rate in the Serial Monitor and not the deployed code, we will get some really odd artifacting. This is because the device is broadcasting bytes at a certain rate, while the receiver expects bytes at a faster rate. Thus, the receiver will read either a larger or smaller range of bits than expected. When deserialized back into numbers, the data will yield really large numbers that do not correspond to latin characters on the unicode table.
+
 
 
 ## Challenges:

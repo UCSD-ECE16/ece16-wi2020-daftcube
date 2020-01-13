@@ -1,3 +1,4 @@
+/*
 const int BUTTON_PIN = 26;
 
 void setup() {
@@ -10,5 +11,5 @@ void loop() {
   delay(1000);
   digitalWrite(BUTTON_PIN, LOW);
   delay(1000);
-  
 }
+*/
