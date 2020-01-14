@@ -120,13 +120,58 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > [TODO: Insert a gif.]
 
 ### Challenge 1: 
-
->Q. First questions
-
->A. Your answer and supporting image
 >
->To include an image, first include your image in your images folder. 
->![Image of Challenge](fig/Lab0_SampleImage.jpg)
+> **Q. What are the resistor values you chose for each of the LEDs?**
+>
+> A. Each resistor value depends on the **forward voltage** or **voltage drop** of the LED. This depends on color. I used this chart for my LEDs: (http://dangerousprototypes.com/docs/Basic_Light_Emitting_Diode_guide)
+> ##### Red LED
+> ![Image of Challenge](fig/Lab1_Tutorial2_BlinkCircuitDiagram.png)
+>
+> See Tutorial for Red LED.
+> ##### Yellow LED 
+>
+> V = IR 
+>
+> V = [3.3 Volts Provided] - [2 Volt Drop over LED]; 
+>
+> V = 1.3 Volts
+> 
+> R = ? Ω
+>
+> I = .015 A (Running 5 milliamps below safe maximum of device)
+> 
+> V / I = R
+>
+> 1.3 V / .015 A ~= 86.6 Ω
+>
+> **The closest resistor I could find is 100 Ω**
+> ##### Blue LED 
+>
+> V = IR 
+>
+> V = [3.3 Volts Provided] - [3 Volt Drop over LED]; 
+>
+> V = .3 Volts
+> 
+> R = ? Ω
+>
+> I = .015 A (Running 5 milliamps below safe maximum of device)
+> 
+> V / I = R
+>
+> .3 V / .015 A ~= 20 Ω
+>
+> **The closest resistor I could find is 100 Ω**
+>
+> **Q. Videos showing each condition (please record in landscape-horizontal mode)**
+>
+> ![Image of Challenge](fig/Lab1_Challenge1_SequentialBlink.gif)
+>
+> Here are all of the parts of the challenge running sequentially. You can see the result running above.
+>
+> ![Image of Challenge](fig/Lab1_Challenge1_AllBlink.gif)
+>
+> So, I thought it would be cooler to have all of the LEDs go at the same time. So I did that too. I accomplished this by defining several integer-based timers in an array, and having each condition function have a self-contained timer. The loop runs every millisecond and calls every condition, where the internal timer is incremented. For the onboard LED, it cycles through conditions 1-3. You can see the result above.
 
 ### Challenge 2:
 >Q. Second Challenge wants you to have a video!
