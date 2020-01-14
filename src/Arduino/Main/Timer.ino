@@ -23,7 +23,7 @@ byte state = 0; // A simple variable to keep track of what state we are (See sta
 
 #ifdef BENCHMARK_ENABLED
 bool isRunningBenchmark = false;
-long benchmarkStartTime = 0;
+unsigned long benchmarkStartTime = 0;
 #endif
 
 // Benchmark
@@ -80,7 +80,7 @@ void executeChallenge2Tasks()
         #ifdef BENCHMARK_ENABLED
 
         isRunningBenchmark = true;
-        benchmarkStartTime = millis();
+        benchmarkStartTime = micros();
         
         #endif
       }
@@ -103,7 +103,7 @@ void executeChallenge2Tasks()
         if (isRunningBenchmark)
         {
           isRunningBenchmark = false;
-          long benchmarkTime = millis() - benchmarkStartTime;
+          unsigned long benchmarkTime = micros() - benchmarkStartTime;
           Serial.print("Benchmark: ");
           Serial.println(benchmarkTime);
         }

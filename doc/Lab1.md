@@ -183,7 +183,13 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > **Q. What is the average time elapsed for each second increment? Use millis() to help you with this task. Describe how you measured this.** 
 >
-> It's also very likely that my simple task scheduler makes up a good portion of that overhead time.
+> I built a simple bit of benchmarking code to take the time between each second increment. First, in the transition of my start state, I save the current time since startup in milliseconds to a variable using millis. Then, after my the first increment of the internal timer, I take the difference between the current time (using millis) and the previous time I had saved. The difference is the amount of time it took to execute that bit of code.
+>
+> To run my benchmarking code, type #define BENCHMARK_ENABLED at the top of my code.
+>
+> In my code, I had an average time of 1000 ms exactly across the board. I took 12 samples, and they were all 1000 ms.
+>
+> I decided to rewrite the benchmarking code using microseconds instead of milliseconds because I was curious if there was any observable overhead at all. With my microseconds benchmarking test, I was able to observe a 7-9 microsecond overhead. 
 > 
 ### Challenge 3: Timer, Part 2
 >
