@@ -44,7 +44,9 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > **Q. Why do we need a pull-up resistor? Describe the behavior without it.**
 > 
-> Todo Answer.
+> If we just have a switch between a power source and our input pin, we don't always have a complete circuit between them. This means that when the switch is open, we could have a "floating state" where the amount of voltage received by the pin is uncertain.
+>
+> A pull-up resistor is a means to maintain a closed circuit even when the switch has an open state. When open, a tiny amount of current passes through the resistor and back to ground. When closed, current will flow through the switch to the input pin.
 >
 > ##### Remarks for Switch Exercise
 >
@@ -83,7 +85,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > **Q. What is the limit for the GPIO? You can find this on the ESP32_WROOM datasheet.**
 >
-> According to the datasheet, its either 40 milliamps or 20 milliamps. I don't know how to read it. TODO ask in office hours.
+> According to the datasheet, its either 40 milliamps or 20 milliamps, depending on the power domain.
 > 
 > #### Serial Port Introduction
 >
@@ -119,7 +121,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > 
 > [TODO: Insert a gif.]
 
-### Challenge 1: 
+### Challenge 1: Blink
 >
 > **Q. What are the resistor values you chose for each of the LEDs?**
 >
@@ -173,10 +175,38 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > So, I thought it would be cooler to have all of the LEDs go at the same time. So I did that too. I accomplished this by defining several integer-based timers in an array, and having each condition function have a self-contained timer. The loop runs every millisecond and calls every condition, where the internal timer is incremented. For the onboard LED, it cycles through conditions 1-3. You can see the result above.
 
-### Challenge 2:
->Q. Second Challenge wants you to have a video!
-
->A. Answer the question and describe the video.  
->![Image of Challenge](fig/Lab0_SampleVideo.gif)
-
-### Challenge 3:
+### Challenge 2: Timer, Part 1
+> ![Image of Challenge](fig/Lab1_Challenge3_Timer2.gif)
+>
+> ##### Opening Preface
+> I decided to keep going with my task-based programming pattern that I used in the first challenge. I thought the result was pretty cool, but the resulting code is quite complicated. It might be a good idea to read my response to Challenge 3 before continuing.
+>
+> **Q. What is the average time elapsed for each second increment? Use millis() to help you with this task. Describe how you measured this.** 
+>
+> It's also very likely that my simple task scheduler makes up a good portion of that overhead time.
+> 
+### Challenge 3: Timer, Part 2
+>
+> ![Image of Challenge](fig/Lab1_Challenge3_Timer1.gif)
+>
+> **Q. Describe in plain english the logic of your program.**
+>
+> Let's start from the top!
+>
+> Because I wanted to support multiple challenges being executed in parallel, I built a primitive task scheduler. Each challenge is built as a self-contained task. The main loop() function calls every task's loop function sequentially every millisecond. 
+>
+> This organization allows each task to have its own self contained logic that executes in parallel. In exchange, however, tasks may not call blocking functions without suspending the execution of all other tasks. *This means I could not call the delay() function in tasks without potentially breaking other tasks!* 
+>
+>**Engineering is all about tradeoffs; the assumptions that were made to gain the added benefit of parallelization came with a cost of increased program complexity.** 
+>
+>While delay() cannot be used, a task can yield by waiting for an incrementing local variable to reach a certain value. This is exactly what I did. 
+>
+> I implemented the timer as a finite state machine (FSM). Every time loop is called, I use a switch statement to select which logic to run depending on the current state of my FSM. Here is a rundown of each state's behavior:
+>
+> ![Image of Challenge](fig/Lab1_Challenge3_FSM.png)
+>
+> - **Start State**: If the button is pressed, transition to the following state.
+> - **Counting Up**: Increments an internal timer by one millisecond. If the timer exceeds 1000 milliseconds, the addTimer() function is called and the internal timer is reset. Within the addTimer() function, the global timer is incremented by one and a message is output through the serial port. If the button is released, the internal timer is reset and the program transitions to the next state.
+> - **Counting Down**: Increments an internal timer by one millisecond. If the timer exceeds 200 milliseconds, the removeTimer() function is called, which decrements the global timer by one and sends a message through the serial port. If the global timer is equal to zero, we reset the internal timer and transition back to the start state.
+> 
+> The finite state machine provides a really good means of organizing program logic, and it allows an easy way to implement a state-dependent, yielding program such as this timer.

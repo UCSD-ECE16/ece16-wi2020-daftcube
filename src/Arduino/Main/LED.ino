@@ -9,7 +9,7 @@
  */
 
 #ifdef LED
-#define LED_IS_SEQUENTIAL true
+#define LED_IS_SEQUENTIAL false
 
 // If we are using sequential mode, this variable will keep track of the current challenge we are on.
 int condition = 0;
@@ -22,16 +22,13 @@ const int RED_LED = 26;
 const int YELLOW_LED = 27;
 const int BLUE_LED = 13;
 
-// Amount of time the loop function yields for before calling active tasks again.
-const int TASK_DELAY = 1;
-
 // Timer for each LED. Allows operation in parallel.
 int timerState[6] = {0, 0, 0, 0, 0, 0};
 
 /*
- * Setup is called at startup
+ * Sets up all of the resources that Challenge 1 depends on.
  */
-void setup()
+void challenge1Setup()
 {
   // Setup GPIO as output.
   pinMode(LED_BUILTIN, OUTPUT);
@@ -40,16 +37,10 @@ void setup()
   pinMode(BLUE_LED, OUTPUT);
 }
 
-
 /*
- * Loop is called repeatedly by the MCU
- * 
- * Remarks:
- * This follows a task-based pattern. Each condition method
- * is a self-contained task, with a self-contained timer. All
- * loop does is call the task and it handles the rest.
+ * Executes all of the tasks associated with Challenge 1.
  */
-void loop()
+void executeChallenge1Tasks()
 {
   if (LED_IS_SEQUENTIAL)
   {
@@ -103,9 +94,6 @@ void loop()
       sequentialMasterTimer = 0; // Reset timer.
     }
   }
-
-  // Wait a TASK_DELAY amount of time before calling everything again.
-  delay(TASK_DELAY);
 }
 
 
