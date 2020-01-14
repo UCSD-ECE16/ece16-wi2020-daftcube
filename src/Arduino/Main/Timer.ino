@@ -5,7 +5,11 @@
  * 
  * Remarks:
  * Timer depends on Button.
+ * 
+ * Options
+ * BENCHMARK_ENABLED: If defined, will run the benchmark serial printing code.
  */
+#define BENCHMARK_ENABLED
 
 #ifdef TIMER
 
@@ -16,6 +20,13 @@ int challenge2Timer_seconds = 0; // The main timer
 int subTimer = 0; // Subtimer for tracking how long the button has been held down for.
 
 byte state = 0; // A simple variable to keep track of what state we are (See state machine diagram)
+
+#ifdef BENCHMARK_ENABLED
+bool isRunningBenchmark = false;
+long benchmarkStartTime = 0;
+#endif
+
+// Benchmark
 
 /*
  * Setup is called at initialization.
@@ -56,7 +67,7 @@ void executeChallenge2Tasks()
 
   switch(state)
   {
-    // [ WAITING ]
+    // [ START ]
     case 0:
 
       // TRANSITION
@@ -64,9 +75,18 @@ void executeChallenge2Tasks()
       if (getButton())
       {
         transitionState();
+
+        
+        #ifdef BENCHMARK_ENABLED
+
+        isRunningBenchmark = true;
+        benchmarkStartTime = millis();
+        
+        #endif
       }
       
       break;
+    // [ COUNTING_UP ]
     case 1:
 
       subTimer++; // Increase the time since the button was last pushed.
@@ -77,6 +97,17 @@ void executeChallenge2Tasks()
         // Add to master timer and reset subtimer.
         addTimer();
         subTimer = 0;
+
+        
+        #ifdef BENCHMARK_ENABLED
+        if (isRunningBenchmark)
+        {
+          isRunningBenchmark = false;
+          long benchmarkTime = millis() - benchmarkStartTime;
+          Serial.print("Benchmark: ");
+          Serial.println(benchmarkTime);
+        }
+        #endif
       }
 
       // TRANSITION
@@ -89,6 +120,7 @@ void executeChallenge2Tasks()
         subTimer = 0;
       }
       break;
+    // [ COUNTING_DOWN ]
     case 2:
 
       subTimer++; // Add to subtimer
