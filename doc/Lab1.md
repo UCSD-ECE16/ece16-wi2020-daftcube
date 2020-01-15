@@ -23,7 +23,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > **frequency ~= .667 Hz**
 > 
 > My previous note has been added to Git.
-
+>
 > **Q. When you open the conflicted readme, what did you get? How did you fix it?**
 >
 > A.
@@ -116,10 +116,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 ## Challenges:
 
 ### Challenge 0: "Have a Repo with some files in it!"
-> ✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅
-> Oh wait, here's my required gif!
-> 
-> [TODO: Insert a gif.]
+> # ✅
 
 ### Challenge 1: Blink
 >
@@ -199,7 +196,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > Let's start from the top!
 >
-> Because I wanted to support multiple challenges being executed in parallel, I built a primitive task scheduler. Each challenge is built as a self-contained task. The main loop() function calls every task's loop function sequentially every millisecond. 
+> Because I wanted to support multiple challenges being executed in parallel, I built a primitive task-based framework. Each challenge is built as a self-contained task. The main loop() function calls every task's loop function sequentially every millisecond. I'm not sure one could call it a primitive task scheduler though.
 >
 > This organization allows each task to have its own self contained logic that executes in parallel. In exchange, however, tasks may not call blocking functions without suspending the execution of all other tasks. *This means I could not call the delay() function in tasks without potentially breaking other tasks!* 
 >
