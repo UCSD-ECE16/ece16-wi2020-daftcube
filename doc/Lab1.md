@@ -7,7 +7,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 ### Tutorial 1:
 
 > #### Blink
-> ![Image of Challenge](fig/Lab1_Blink.gif)
+> ![Image of Challenge](fig/Lab1/Lab1_Blink.gif)
 >
 > **Q. What is the frequency of the blink rate in this example? Note that frequency is the inverse of the time it takes for a cycle. A cycle is the time it takes to go HIGH to LOW to HIGH again. Record a video of your FireBeetle blinking.  Make a note of the answer for now, in the next GIT tutorial, you will get a copy of a sample lab report.**
 >
@@ -27,7 +27,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > **Q. When you open the conflicted readme, what did you get? How did you fix it?**
 >
 > A.
->![Image of Challenge](fig/Lab1_Tutorial1_GitPushIssue.png)
+>![Image of Challenge](fig/Lab1/Lab1_Tutorial1_GitPushIssue.png)
 > What we get is this glorious error message. Essentially, we have a version conflict; the current copy of our file
 > on our local repository no longer matches the file that lives in the remote repository. We have a few options to fix
 > it, including but certainly not limited to...
@@ -40,7 +40,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 
 ### Tutorial 2
 > #### Switch
-> ![Image of Challenge](fig/Lab1_Button.gif)
+> ![Image of Challenge](fig/Lab1/Lab1_Button.gif)
 >
 > **Q. Why do we need a pull-up resistor? Describe the behavior without it.**
 > 
@@ -53,7 +53,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > I used an LED instead of a wire to bridge my button output to my digital read pin. I made this decision because the LED just fit the breadboard better. While it doesn't light up because the 1000 ohm resistor doesn't allow enough current to create a visible amount of light light, it still completes the circuit and allows the charge to flow.
 > #### External LED Blink
 >
-> ![Image of Challenge](fig/Lab1_BlinkLED.gif)
+> ![Image of Challenge](fig/Lab1/Lab1_BlinkLED.gif)
 >
 > **Q. Which GPIO pin did you have to use according to the above setup?**
 >
@@ -61,7 +61,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > **Q. What is the expected current draw?**
 >
-> ![Image of Challenge](fig/Lab1_Tutorial2_BlinkCircuitDiagram.png)
+> ![Image of Challenge](fig/Lab1/Lab1_Tutorial2_BlinkCircuitDiagram.png)
 >
 > V = IR 
 >
@@ -89,7 +89,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > 
 > #### Serial Port Introduction
 >
-> ![Image of Challenge](fig/Lab1_Tutorial2_SerialMonitor.png)
+> ![Image of Challenge](fig/Lab1/Lab1_Tutorial2_SerialMonitor.png)
 >
 > **Q. In your report, run the above code at Baud Rate of 9600. How many seconds are between each Hello World? What did you expect the time between each print statement to be and what did you actually get?** 
 >
@@ -124,7 +124,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > A. Each resistor value depends on the **forward voltage** or **voltage drop** of the LED. This depends on color. I used this chart for my LEDs: (http://dangerousprototypes.com/docs/Basic_Light_Emitting_Diode_guide)
 > ##### Red LED
-> ![Image of Challenge](fig/Lab1_Tutorial2_BlinkCircuitDiagram.png)
+> ![Image of Challenge](fig/Lab1/Lab1_Tutorial2_BlinkCircuitDiagram.png)
 >
 > See Tutorial for Red LED.
 > ##### Yellow LED 
@@ -164,16 +164,16 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > **Q. Videos showing each condition (please record in landscape-horizontal mode)**
 >
-> ![Image of Challenge](fig/Lab1_Challenge1_SequentialBlink.gif)
+> ![Image of Challenge](fig/Lab1/Lab1_Challenge1_SequentialBlink.gif)
 >
 > Here are all of the parts of the challenge running sequentially. You can see the result running above.
 >
-> ![Image of Challenge](fig/Lab1_Challenge1_AllBlink.gif)
+> ![Image of Challenge](fig/Lab1/Lab1_Challenge1_AllBlink.gif)
 >
 > So, I thought it would be cooler to have all of the LEDs go at the same time. So I did that too. I accomplished this by defining several integer-based timers in an array, and having each condition function have a self-contained timer. The loop runs every millisecond and calls every condition, where the internal timer is incremented. For the onboard LED, it cycles through conditions 1-3. You can see the result above.
 
 ### Challenge 2: Timer, Part 1
-> ![Image of Challenge](fig/Lab1_Challenge3_Timer2.gif)
+> ![Image of Challenge](fig/Lab1/Lab1_Challenge3_Timer2.gif)
 >
 > ##### Opening Preface
 > I decided to keep going with my task-based programming pattern that I used in the first challenge. I thought the result was pretty cool, but the resulting code is quite complicated. It might be a good idea to read my response to Challenge 3 before continuing.
