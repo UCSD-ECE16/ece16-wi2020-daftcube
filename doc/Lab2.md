@@ -60,18 +60,38 @@ Date: 01/16/2020
 ## Tutorial 2: Pulse Width Modulators
 
 > **Q. In the above figure, assuming we are showing 2ms of data, what is the PWM frequency?**
+> 
+> According to the lab, a cycle is defined as the LED turning on, and then off.
+> 
+> In the diagram, the LED completes five on/off cycles. These five cycles occur in a two millisecond interval. Using this information, we can plug in the values into the formula for frequency.
 >
+> frequency = cycles / second
+>
+> 5 cycles / .002 seconds =
+>
+> **2500 Hz**
+> 
 > **Q. Why is 100% duty cycle 255 instead of 256?**
 >
-> 
+> At eight bits of resolution, there are 2^8 = 256 possible values for duty cycle. The maximum numerical value is 255 because zero requires one of those possible values in order to be represented. As zero uses one of the possible values, that means the highest unsigned value must be 255.
 > 
 > **Q. We purposely made some mistakes in the above example.  What were they? It will not work directly, but by reading the compilation error, the tutorial instructions, and comments carefully, you should have no trouble getting it to work!**
-> 
-> 
+>
+> **Syntax**
+> - There was a capitalization error on the constant "pwmBitresolution." 
+> - The delay functions in loop did not have semicolons.
+>
+> **Logic**
+> - In the loop function, the original code does not turn the LED on or off with PWM. Instead, it tries to bind pin 0 to nonexistent PWM channels. By changing the function to 'ledcWrite,' we actually cycle the LED.
 
 ## Tutorial 3: OLED Screens
 
 > **Q. Again we made some intentional mistakes in the code above. What were they?**
+>
+> **Syntax**
+> - Missing semicolon after u8x8.begin()
+> - u8x8.print(messages) should be u8x8.print(message)
+> - In setup, showMessages(...) should be showMessage(...) 
 
 ## Tutorial 4: 
 

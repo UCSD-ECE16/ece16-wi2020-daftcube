@@ -1,12 +1,6 @@
-/*
- * Lab2 Tutorials
- * 
- * Owen Bartolf
- */
-
 #define ACCEL_Z_PIN A0
 
-
+#if ACCELEROMETER
 void setup() {
   // put your setup code here, to run once:
   pinMode(ACCEL_Z_PIN, INPUT);  
@@ -18,3 +12,4 @@ void loop() {
   Serial.println(readValue);
   delay(100);
 }
+#endif
