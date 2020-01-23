@@ -93,11 +93,23 @@ Date: 01/16/2020
 > - u8x8.print(messages) should be u8x8.print(message)
 > - In setup, showMessages(...) should be showMessage(...) 
 
-## Tutorial 4: 
+## Tutorial 4: Serial Read
 
 > **Q. What did the Arduino receive? How does this change if you use different line endings?**
 >
+> The Arduino receives each character as an encoded byte that coincides with the ASCII Standard Encoding. Within the ASCII Standard, each character is mapped to a particular character on the table. Thus, if we send the string, "Hello, World!" without any endline characters, we get the array...
+>
+> { 72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33 }
+> 
+> If we choose to add an endline character or carriage return character in the Serial Monitor, we get the same buffer but with an additional end byte that represents the invisible character.
+>
+> If we choose to add both an endline character and a carriage return character, we get the same buffer but with two additional bytes at the end. These represent the two added newline characters.
+>
 > **Q. What are the Decimal values of NL (new line) and CR (Carriage Return)?**
+>
+> When I just hit enter in the Serial Monitor with the Newline character option selected, I receive the byte 10. **This means that the decimal value for NL is 10.**
+>
+> When I just hit enter in the Serial Monitor with the Carriage Return option selected, I receive the byte 13. **This means that the decimal value for CR is 13.**
 
 ## Challenge 1: Fading Buzzer
 

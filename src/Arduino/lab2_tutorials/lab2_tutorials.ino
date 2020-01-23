@@ -14,4 +14,5 @@
 
 #define ACCELEROMETER false
 #define PULSE_WIDTH_MODULATOR false
-#define OLED true
+#define OLED false
+#define SERIAL_READ true
