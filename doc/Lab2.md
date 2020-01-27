@@ -115,7 +115,11 @@ Date: 01/16/2020
 
 > **Q. Which pin does the code ask you to use for the motor?**
 >
+> We use pin 5 for the motor.
+> 
 > **Q. Why can’t we achieve this speed variation using a digitalWrite and instead has to use ledcWrite?**
+> 
+> 
 
 ## Challenge 2: Gesture Detection
 
@@ -130,7 +134,7 @@ Date: 01/16/2020
 > Q. Video of a message typed into the serial monitor and appearing on the OLED. This video should be shot WITHOUT moving the camera. 
 > Q. What happens if you write a really long message? Why?
 
-## Needless Experiment 0: Custom Plotting Application that Renders to OLED
+## Needless Experiment 0: Render to Any Pixel on OLED
 > **Q. Is it possible?**
 > 
 > Yes.
