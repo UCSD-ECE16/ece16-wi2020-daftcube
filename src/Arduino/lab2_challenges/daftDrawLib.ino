@@ -41,7 +41,100 @@ void DaftDrawLib_initDisplay()
 }
 
 /*
- * void DaftDrawLib_setPixel()
+ * DaftDrawLib_setLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1)
+ * 
+ * Sets all of the pixels in the line from (x0, y0) to (x1, y1) to the given state.
+ * 
+ * An implementation of the Bresenham's Line Algorithm. Implemented from pseudocode on Wikipedia.
+ */
+void DaftDrawLib_setLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, bool onState)
+{
+  if (abs(y1 - y0) < abs(x1 - x0))
+  {
+    if (x0 > x1)
+    {
+      DaftDrawLib_setLine_low(x1, y1, x0, y0, onState);
+    }
+    else
+    {
+      DaftDrawLib_setLine_low(x0, y0, x1, y1, onState);
+    }
+  }
+  else
+  {
+    if (y0 > y1)
+    {
+      DaftDrawLib_setLine_high(x1, y1, x0, y0, onState);
+    }
+    else
+    {
+      DaftDrawLib_setLine_high(x0, y0, x1, y1, onState);
+    }
+  }
+}
+
+void DaftDrawLib_setLine_low(int16_t x0, int16_t y0, int16_t x1, int16_t y1, bool onState)
+{
+  int dx = x1 - x0;
+  int dy = y1 - y0;
+  int yi = 1;
+  
+  // Flip for negative grade.
+  if (dy < 0)
+  {
+    yi = -1;
+    dy = -dy;
+  }
+
+  float D = 2*dy - dx;
+  int y = y0;
+
+  for (int x = x0; x <= x1; x++)
+  {
+    DaftDrawLib_setPixel(x, y, onState);
+
+    if (D > 0)
+    {
+      y = y + yi;
+      D = D - 2*dx;
+    }
+
+    D = D + 2*dy;
+  }
+}
+
+void DaftDrawLib_setLine_high(int16_t x0, int16_t y0, int16_t x1, int16_t y1, bool onState)
+{
+  int dx = x1 - x0;
+  int dy = y1 - y0;
+  int xi = 1;
+  
+  // Flip for negative grade.
+  if (dx < 0)
+  {
+    xi = -1;
+    dx = -dx;
+  }
+
+  float D = 2*dx - dy;
+  int x = x0;
+
+  for (int y = y0; y <= y1; y++)
+  {
+    DaftDrawLib_setPixel(x, y, onState);
+
+    if (D > 0)
+    {
+      x = x + xi;
+      D = D - 2*dy;
+    }
+
+    D = D + 2*dx;
+  }
+}
+
+/*
+ * DaftDrawLib_setPixel(uint8_t x, uint8_t y, bool onState)
  * 
  * If the pixel lies out of the defined bounds, the change will not be
  * rendered.
@@ -73,6 +166,23 @@ void DaftDrawLib_setPixel(uint8_t x, uint8_t y, bool onState)
   else
   {
     pendingFlushBuffer[DaftDrawLib_ScreenToTileCoordinateY(y)][x] ^= delta;
+  }
+}
+
+/*
+ * void DaftDrawLib_clear()
+ * 
+ * Resets every pixel on the screen to its off state. Does not flush, however.
+ */
+void DaftDrawLib_clear()
+{
+  // Reset every pixel.
+  for(uint8_t yTile = 0; yTile < SCREEN_TILE_HEIGHT; yTile++)
+  {
+    for(uint8_t xScreen = 0; xScreen < SCREEN_PIXEL_WIDTH; xScreen++)
+    {
+      pendingFlushBuffer[yTile][xScreen] = 0;
+    }
   }
 }
 

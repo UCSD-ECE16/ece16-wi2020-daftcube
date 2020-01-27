@@ -7,6 +7,8 @@
 
 #if FIREWORKS
 
+#define DEBUG_SERIAL false
+
 #define FRAMES_PER_SECOND 30  // Framerate
 #define DELTA_TIME .0333      // 1 Second / Framerate
 
@@ -15,25 +17,30 @@
 #define MAX_SUBEMITTERS_PER_FIREWORK 10
 #define MIN_SUBEMITTERS_PER_FIREWORK 5
 
-#define MIN_FIREWORK_SPAWN_X 0
-#define MAX_FIREWORK_SPAWN_X 128
+#define MIN_FIREWORK_SPAWN_X 32
+#define MAX_FIREWORK_SPAWN_X 96
 
-#define MIN_FIREWORK_RELOAD_TIME 250
-#define MAX_FIREWORK_RELOAD_TIME 1000
+#define MIN_FIREWORK_EXPLOSION_FORCE 1280
+#define MAX_FIREWORK_EXPLOSION_FORCE 1280
+#define DIVIDE_BY_FIREWORK_EXPLOSION_FORCE 100
+
+#define MIN_FIREWORK_RELOAD_TIME 1000
+#define MAX_FIREWORK_RELOAD_TIME 4000
 #define DIVIDE_BY_FIREWORK_RELOAD_TIME 1000
 
 #define MIN_SUBPARTICLE_TIME_TO_LIVE 500
 #define MAX_SUBPARTICLE_TIME_TO_LIVE 1500
 #define DIVIDE_BY_SUBPARTICLE_TIME_TO_LIVE 1000
 
-#define MIN_FIREWORK_LATERAL_VELOCITY -5
-#define MAX_FIREWORK_LATERAL_VELOCITY 5
-#define MIN_FIREWORK_VERTICAL_VELOCITY 24
-#define MAX_FIREWORK_VERTICAL_VELOCITY 41
+#define MIN_FIREWORK_LATERAL_VELOCITY -9
+#define MAX_FIREWORK_LATERAL_VELOCITY 9
+#define MIN_FIREWORK_VERTICAL_VELOCITY 1280
+#define MAX_FIREWORK_VERTICAL_VELOCITY 1680
+#define DIVIDE_BY_FIREWORK_VERTICAL_VELOCITY 100
 
-#define TRAIL_LENGTH 10
+#define TRAIL_LENGTH 4
 
-#define GRAVITY -.8
+#define GRAVITY 4.0
 
 struct FireworksParticle
 {
@@ -48,7 +55,7 @@ struct FireworksParticle
 
   // State
   int state; // 0 = flight, 1 = invisible
-  int timer; // timer for waiting / invisible
+  float timer; // timer for waiting / invisible
   
   // Visual
   bool hasSparkle; // If we should render sparkles for sub-emitter.
@@ -56,10 +63,6 @@ struct FireworksParticle
 
 struct FireworksParticle particles[PERSISTENT_COUNT];
 struct FireworksParticle subParticles[PERSISTENT_COUNT * MAX_SUBEMITTERS_PER_FIREWORK];
-
-/* ========================================================== */
-// Clock
-/* ========================================================== */
 
 
 
@@ -69,21 +72,108 @@ struct FireworksParticle subParticles[PERSISTENT_COUNT * MAX_SUBEMITTERS_PER_FIR
 
 void setup()
 {
+  // Initialize display
+  DaftDrawLib_initDisplay();
+
+  // Initialize LEDC
+  setupLightFx();
+
+#if DEBUG_SERIAL
+  Serial.begin(74880);
+#endif
+
   // Initialize all particles
+  setupFireworksAnSubParticles();
 }
 
 void loop()
 {
+  // Refresh screen.
+  DaftDrawLib_clear();
 
+  // Process Light Fx
+  processLight();
+    
+  // Process and draw all particles and sub particles.
+  for (int i = 0; i < PERSISTENT_COUNT; i++)
+  {
+    runFireworkStateMachine(i);
+    serialOutFireworkState(i);
+    drawFirework(i);
+  }
+  for (int i = 0; i < (PERSISTENT_COUNT * MAX_SUBEMITTERS_PER_FIREWORK); i++)
+  {
+    runSubEmitterStateMachine(i);
+    drawSubParticle(i);
+    
+  }
+
+  // Update the screen.
+  DaftDrawLib_flush();
   
   delay(1000 / FRAMES_PER_SECOND); // 30 FPS
 }
 
+/* ========================================================== */
+// LED Light FX
+/* ========================================================== */
 
+float ledTimer = 0;
+
+#define LIGHT_FX_PIN 27
+#define LIGHT_FX_FLASH_DURATION .5
+
+#define LED_FX_CHANNEL 3
+#define LED_FX_FREQUENCY 5000
+#define LED_FX_PWM_BIT_RESOLUTION 8
+
+void setupLightFx()
+{
+  ledcSetup(LED_FX_CHANNEL, LED_FX_FREQUENCY, LED_FX_PWM_BIT_RESOLUTION);
+  ledcAttachPin(LIGHT_FX_PIN, LED_FX_CHANNEL);
+}
+
+// Hopefully not really...
+void explodeLight()
+{
+  ledTimer = LIGHT_FX_FLASH_DURATION;
+}
+
+// Processes the light
+void processLight()
+{
+  ledcWrite(LED_FX_CHANNEL, map( LIGHT_FX_FLASH_DURATION * 1000, 0, 255, 0, ((int)(ledTimer * 1000)) ));
+  ledTimer -= DELTA_TIME;
+  if (ledTimer <= 0)
+  {
+    ledTimer = 0;
+  }
+}
 
 /* ========================================================== */
 // Firework Logic
 /* ========================================================== */
+
+/*
+ * void setupFireworksAnSubParticles()
+ * 
+ * Configures all particles so that they are ready for use in the rest of the program.
+ */
+void setupFireworksAnSubParticles()
+{
+  // Initialize particles
+  for(int i = 0; i < PERSISTENT_COUNT; i++)
+  {
+    particles[i].state = 1;
+    particles[i].timer = (float)random(100,3000) / 1000;
+  }
+
+  // Initialize subparticles
+  for(int i = 0; i < PERSISTENT_COUNT; i++)
+  {
+    particles[i].state = 1;
+  }
+}
 
 /* 
  *  int getIndexOfUnusedSubEmitter()
@@ -107,6 +197,77 @@ int getIndexOfUnusedSubEmitter()
 }
 
 /*
+ * Draws a firework going upwares.
+ */
+void drawFirework(int index)
+{
+  // If flying
+  if (particles[index].state == 0)
+  {
+    DaftDrawLib_setPixel( floor(particles[index].posX[0]), floor(particles[index].posY[0]), true );
+  }
+  
+}
+
+/*
+ * Draws a firework going upwares.
+ */
+void drawSubParticle(int index)
+{
+  // If flying
+  if (subParticles[index].state == 0)
+  {
+    // Render trail
+    for (int i = 1; i < TRAIL_LENGTH; i++)
+    {
+      DaftDrawLib_setLine( floor(subParticles[index].posX[i-1]), floor(subParticles[index].posY[i-1]), floor(subParticles[index].posX[i]), floor(subParticles[index].posY[i]), true );
+    }
+  }
+}
+
+void serialOutFireworkState(int index)
+{
+  #if DEBUG_SERIAL
+  Serial.print("{ Firework ");
+  Serial.print(index);
+  Serial.print(", State ");
+  Serial.print(particles[index].state);
+  Serial.print(", Timer ");
+  Serial.print(particles[index].timer);
+  Serial.print(", X ");
+  Serial.print(particles[index].posX[0]);
+  Serial.print(", Y ");
+  Serial.print(particles[index].posY[0]);
+  Serial.print(", VelX ");
+  Serial.print(particles[index].velocityX);
+  Serial.print(", VelY ");
+  Serial.print(particles[index].velocityY);
+  Serial.println("}");
+  #endif
+}
+
+void serialOutSubParticleState(int index)
+{
+  #if DEBUG_SERIAL
+  Serial.print("{ SubParticle ");
+  Serial.print(index);
+  Serial.print(", State ");
+  Serial.print(subParticles[index].state);
+  Serial.print(", Timer ");
+  Serial.print(subParticles[index].timer);
+  Serial.print(", X ");
+  Serial.print(subParticles[index].posX[0]);
+  Serial.print(", Y ");
+  Serial.print(subParticles[index].posY[0]);
+  Serial.print(", VelX ");
+  Serial.print(subParticles[index].velocityX);
+  Serial.print(", VelY ");
+  Serial.print(subParticles[index].velocityY);
+  Serial.println("}");
+  #endif
+}
+
+/*
  * 
  */
 void runFireworkStateMachine(int index)
@@ -126,6 +287,8 @@ void runFireworkStateMachine(int index)
       {
         // Set time as reload time
         particles[index].timer = (float)(random(MIN_FIREWORK_RELOAD_TIME, MAX_FIREWORK_RELOAD_TIME)) / DIVIDE_BY_FIREWORK_RELOAD_TIME;
+
+        detonateFirework(index);
         
         // Transition state!
         particles[index].state = 1;
@@ -161,6 +324,9 @@ void runSubEmitterStateMachine(int index)
       // Fly!
       moveSubParticle(index, true);
 
+      // Send State
+      serialOutSubParticleState(index);
+
       // Time's up, dissipate!
       if (subParticles[index].timer <= 0)
       {
@@ -189,16 +355,20 @@ void createNewFirework(int index)
   particles[index].posY[0] = (float)0;
 
   particles[index].velocityX = (float)random(MIN_FIREWORK_LATERAL_VELOCITY, MAX_FIREWORK_LATERAL_VELOCITY);
-  particles[index].velocityY = (float)random(MIN_FIREWORK_LATERAL_VELOCITY, MAX_FIREWORK_LATERAL_VELOCITY);
+  particles[index].velocityY = ((float)random(MIN_FIREWORK_VERTICAL_VELOCITY, MAX_FIREWORK_VERTICAL_VELOCITY)) / DIVIDE_BY_FIREWORK_VERTICAL_VELOCITY;
 
   // Detonation Range is based on velocity; this calculates the detonation time for when we get to apoapsis.
-  particles[index].timer = -particles[index].velocityY / (GRAVITY) ;
+  particles[index].timer = -particles[index].velocityY / (-GRAVITY) ;
+  //particles[index].timer = 1000;
 
   particles[index].state = 0; // FLIGHT READY!
 }
 
-void detonateFirework(int index, float posX, float posY)
+void detonateFirework(int index)
 {
+  // Detonate LED
+  explodeLight();
+  
   // Spawn sub-emitters
   for (int i = 0; i < particles[index].trailingParticlesCount; i++)
   {
@@ -209,28 +379,28 @@ void detonateFirework(int index, float posX, float posY)
     if (subEmitterIndex == -1) { break; }
 
     // Get a random velocity angle
-    float randomTheta = random(0, 6283) / 1000;
-    float randomScalar = (float)random(MIN_FIREWORK_LATERAL_VELOCITY, MAX_FIREWORK_LATERAL_VELOCITY);
+    float randomTheta = ((float)random(0, 6283)) / 1000;
+    float randomScalar = ((float)random(MIN_FIREWORK_EXPLOSION_FORCE, MAX_FIREWORK_EXPLOSION_FORCE)) / DIVIDE_BY_FIREWORK_EXPLOSION_FORCE;
 
-    subParticles[i].velocityX = cos(randomTheta) * randomScalar;
-    subParticles[i].velocityY = sin(randomTheta) * randomScalar;
+    subParticles[subEmitterIndex].velocityX = cos(randomTheta) * randomScalar;
+    subParticles[subEmitterIndex].velocityY = sin(randomTheta) * randomScalar;
 
     // Reset trail
-    for (int i = 0; i < TRAIL_LENGTH; i++)
+    for (int i = 1; i < TRAIL_LENGTH; i++)
     {
-      subParticles[i].posX = 0;
-      subParticles[i].posY = 0;
+      subParticles[subEmitterIndex].posX[i] = particles[index].posX[0];
+      subParticles[subEmitterIndex].posY[i] = particles[index].posX[0];
     }
 
-    subParticles[i].posX = posX;
-    subParticles[i].posY = posY;
+    subParticles[subEmitterIndex].posX[0] = particles[index].posX[0];
+    subParticles[subEmitterIndex].posY[0] = particles[index].posY[0];
 
-    subParticles[i].trailingParticlesCount = TRAIL_LENGTH;
+    subParticles[subEmitterIndex].trailingParticlesCount = TRAIL_LENGTH;
 
-    subParticles[i].timer = (float)(random(MIN_SUBPARTICLE_TIME_TO_LIVE, MAX_SUBPARTICLE_TIME_TO_LIVE)) / DIVIDE_BY_SUBPARTICLE_TIME_TO_LIVE;
+    subParticles[subEmitterIndex].timer = (float)(random(MIN_SUBPARTICLE_TIME_TO_LIVE, MAX_SUBPARTICLE_TIME_TO_LIVE)) / DIVIDE_BY_SUBPARTICLE_TIME_TO_LIVE;
 
     // Fire!
-    subParticles[i].state = 0;
+    subParticles[subEmitterIndex].state = 0;
   }
 }
 
