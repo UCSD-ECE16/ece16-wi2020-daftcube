@@ -202,8 +202,49 @@ Date: 01/16/2020
 > **Q. How many states do you need? Describe in words what each state does and it’s transition logic. Draw the state machine?**
 >
 > This is just one of many ways this system could be implemented...
+>
+> **States Needed: 4**
+>
+> **Defined Variables**
+>
+> - masterTimer: The actual timer that the device represents.
+> - subTimer: A timer used to check if the accelerometer was not tapped for 3 seconds.
 > 
+> **State 0: Waiting for Tap**
+>
+> In this state, the machine is simply waiting for a press. The OLED is reset. There is no other state logic, only the transition logic for two transitions...
+>
+> _Transition to Next State:_ Occurs if a tap is detected.
+>
+> _Transition to Self:_ Occurs if no other transition takes place.
+>
+> **State 1: Counting Up**
+>
+> When this state is entered, the machine increments the master timer up by 1 and the subTimer is set to the current time. The OLED is refreshed.
+>
+> _Transition to Next State:_ Occurs if a tap is not detected for three seconds. We use the subTimer to check if this is the case.
+>
+> _Transition to Self:_ Occurs if we detect a tap.
+>
+> **State 2: Counting Down**
+>
+> When this state is entered, the machine decrements the masterTimer by 1. The OLED is refreshed.
+>
+> _Transition to Next State:_ Occurs if masterTimer is less than or equal to zero.
+>
+> _Transition to Self:_ Occurs if masterTimer is greater than 0.
+>
+> **State 3: BUZZ!!**
+>
+> When this state is entered, the buzzer is turned on. The OLED is displays "TIME'S UP!"
+>
+> _Transition to State 0:_ Occurs if a tap is detected.
+>
+> _Transition to Self:_ Occurs if no other transition takes place.
+>
+> **DIAGRAM!**
 > 
+> ![Image](fig/Lab2/Lab2_SystemFSM.png)
 
 ## Challenge 6: Gesture-Controlled Watch
 
@@ -217,11 +258,9 @@ Date: 01/16/2020
 >
 > **Q. Is it impossible to render single pixels on the screen?**
 > 
-> This whole tangent started when someone put forth the claim that it is impossible to render individual points on the provided OLED screen. Whenever someone says that something isn't possible, I get really curious to see if it is really the case.
+> This whole tangent started when someone put forth the claim that it is impossible to render individual points on the provided OLED screen. Whenever someone says that something isn't possible, I get really curious to see if that is really the case.
 > 
-> So technically, the screen can't render single pixels. When I was working on this, I learned that the provided OLED screen is divided into 'tiles,' where each tile controls a chunk of LEDs on the screen. But, we can 'fake' the rendering of single pixels by pushing the screen a byte buffer whose binary only has a single '1.' This renders only one pixel on the screen.
->
-> So, no, it is technically not possible to render images on the screen pixel-by-pixel. However, yes, we can render individual pixels on the screen via the method I described above.
+> Turns out, that _wasn't the case._ I figured out how.
 >
 > **Q. Okay, that's great. But, can it actually render something meaningful?**
 > 
@@ -235,4 +274,4 @@ Date: 01/16/2020
 > 
 > ## **Q. But why...?**
 > 
-> This is my coping mechanism for not getting a CS class.
+> WHY NOT...?
