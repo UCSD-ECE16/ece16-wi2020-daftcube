@@ -249,7 +249,9 @@ Date: 01/16/2020
 ## Challenge 6: Gesture-Controlled Watch
 
 >
->
+> **Q. Video Demonstrating tap + timer function on OLED. Tap the device 10 times and have it count down, have the motor buzz, and then tap to deactivate. Have the motor floating in the air so that when it vibrates, you can see it move.  This video should be shot WITHOUT moving the camera.**
+> 
+> ![Image](fig/Lab2/Lab2_FSMWorks.gif)
 >
 
 ## Needless Experiment 0: Fireworks Particle Simulation

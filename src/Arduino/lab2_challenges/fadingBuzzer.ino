@@ -40,3 +40,24 @@ void buzzMotor(int buzzPower){
 
 
 #endif
+
+#if OTHER_CHALLENGES
+
+// setting PWM properties
+const int motorPin = 5;
+
+const int pwmFrequency = 5000;
+const int pwmChannel = 3;
+const int pwmBitResolution = 8;
+
+void setupMotor(){
+  ledcSetup(pwmChannel, pwmFrequency, pwmBitResolution);
+  ledcAttachPin(motorPin, pwmChannel);
+  ledcAttachPin(LED_BUILTIN, pwmChannel);
+}
+
+void buzzMotor(int buzzPower){
+  ledcWrite(pwmChannel, buzzPower);
+}
+
+#endif

@@ -1,4 +1,4 @@
-#ifdef OTHER_CHALLENGES
+#if OTHER_CHALLENGES
 
 int timer = 0;
 

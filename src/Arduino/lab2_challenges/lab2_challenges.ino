@@ -10,12 +10,15 @@ void setup()
 {
   setupADC();
   initDisplay();
+  setupMotor();
   Serial.begin(115200);
 }
 
 void loop()
 {
-  Lab_C2C3();
+  readADC();
+  printADC();
+  executeTimerTask();
 }
 
 // I did lab C2 and C3 in parallel.

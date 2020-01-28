@@ -4,9 +4,9 @@ int accelZ_calibratedAverage = 2450;
 int accelY_calibratedAverage = 1822;
 int accelX_calibratedAverage = 1931;
 
-int accelZ_threshold = 75;
-int accelY_threshold = 75;
-int accelX_threshold = 75;
+int accelZ_threshold = 100;
+int accelY_threshold = 100;
+int accelX_threshold = 100;
 
 // ===== Gesture Code  ========//
 unsigned long lastTapDebounce = 0;
