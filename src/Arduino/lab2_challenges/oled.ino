@@ -1,4 +1,4 @@
-#ifdef ACCEL
+#ifdef OTHER_CHALLENGES
 
 int timer = 0;
 
@@ -39,8 +39,11 @@ void addTimerOLED(){
   stringTime.toCharArray(message_buffer,4); //convert string to char buffer
   
   // show message_buffer with showMessage
-  showMessage(message_buffer, 0, true);
+  showMessage("                   ", 0, false); // clear.
+  showMessage(message_buffer, 0, false);
 }
+
+
 
 
 

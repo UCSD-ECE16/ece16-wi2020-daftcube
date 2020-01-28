@@ -1,4 +1,4 @@
-#if FADING_BUZZER
+#if CHALLENGE_1
 
 // setting PWM properties
 const int pwmFrequency = 5000;

@@ -1,3 +1,5 @@
+#if OTHER_CHALLENGES
+
 // ========= Timer Var ========= //
 
 unsigned long subTimerMs = 0; //initiate the last tap time at 0
@@ -14,7 +16,8 @@ void runTimerOLED() {
     stringTime.toCharArray(message_buffer,4); //convert string to char buffer
     
     // show message_buffer with showMessage
-    showMessage(message_buffer, 0, true);
+    showMessage("     ", 0, false); // Bootleg clear.
+    showMessage(message_buffer, 0, false);
   }
 }
 
@@ -22,3 +25,5 @@ void pauseForThreeSeconds()
 {
   subTimerMs = millis() + 3000;
 }
+
+#endif

@@ -151,15 +151,88 @@ Date: 01/16/2020
 
 ## Challenge 3: Read / Write to OLED
 
-> Q. Video of a message typed into the serial monitor and appearing on the OLED. This video should be shot WITHOUT moving the camera.
+> **Q. Video of a message typed into the serial monitor and appearing on the OLED. This video should be shot WITHOUT moving the camera.**
 >
-> Q. What happens if you write a really long message? Why?
+> ![Image](fig/Lab2/Lab2_TextToScreen.gif)
+>
+> **Q. What happens if you write a really long message? Why?**
+>
+> Only the start of the message is rendered on the screen. This is because the screen isn't large enough to render all of the text. Internally, the library has a "cursor" that mores to the right as characters are added. With more than a few characters, the cursor falls off the screen and runs out of space to render the message.
+>
+> We can manage this problem by extending our code to store multiple character buffers and then write a simple "wrap to next line" piece of code. Basically, if the length of the message exceeds the length of the display, the following characters would be rendered on the next line. We wouldn't be able to render an essay on it, but the solution would permit additional length.  
+> 
+> There is also a chance that, if we send longer than 64 characters, we completely use up the buffer and then get an IndexOutOfBounds error internally. To fix this, we should add an if statement to prevent our buffer from filling beyond index 63.
 
-## Needless Experiment 0: Render to Any Pixel on OLED
-> **Q. Is it possible?**
+## Challenge 4: Nonblocking Logic
+
+> Demo of nonblocking logic; both the timer and serial read demo work in parallel:
+>
+> ![Image](fig/Lab2/Lab2_NonblockingTimer.gif)
 > 
-> Yes.
+> **Q. As a thought exercise, how might you implement this using BLOCKING logic?** 
+>
+> Implementing this with blocking logic would be difficult. Essentially, we would have to use the actual flow of the program to maintain our state.
+>
+> When we are waiting for the first tap, we would enter a while loop that would not exit until the first tap was detected.
+>
+> Once the first tap was detected, we would enter another blocking loop. We would check for a press, then wait. If a press was detected, we would continue to the next iteration of the loop and iterate the timer variable by 1. We would copy and paste the code three times in the loop, and if it didn't fire by the third time, we would exit the loop to the next part of the program.
+>
+> The next part is simple: a for loop would decrement the timer variable and delay a single second.
+>
+> Once we reach zero seconds, the entire body of the loop() function will have only executed once, and we would hop back to the top.
+>
+> Tap detection would be iffy at best because we would only check once per second. If we wanted to check multiple times, we could use a nested for loop with a small delay. Overall, not a great system.
+>
+> **Q. How would you use NON-BLOCKING logic to set the sampling rate of the accelerometer to 50Hz? Write a pseudo code.**
+>
+> Nonblocking delays are all about using the internal clock to keep track of time instead of the delay() function. Because the clock is always running in the background, we can rely on its value to always be up to date when we call the millis() function.
+>
+> To implement a sample at a set interval, we would create a timer variable to set the time. Then, in the function, we check to see if the current time is greater than/after the time we previously invoked the function plus the desired delay. If true, we run the body of the function, if not, we skip the body. 
+>
+> Because we call the function every loop, the function will execute almost exactly when the internal timer exceeds our nonblocking delay.
+>
+> Pseudocode is below!
+>
+> ![Image](fig/Lab2/Lab2_PseudocodeForNonblocking50Hz.png)
+>
+
+## Challenge 5: State Machine
+
+>
+> **Q. How many states do you need? Describe in words what each state does and it’s transition logic. Draw the state machine?**
+>
+> This is just one of many ways this system could be implemented...
 > 
-> **Q. But... why...?**
 > 
-> Weaponized Boredom.
+
+## Challenge 6: Gesture-Controlled Watch
+
+>
+>
+>
+
+## Needless Experiment 0: Fireworks Particle Simulation
+>
+> ![Image](fig/Lab2/Lab2_Firework.gif)
+>
+> **Q. Is it impossible to render single pixels on the screen?**
+> 
+> This whole tangent started when someone put forth the claim that it is impossible to render individual points on the provided OLED screen. Whenever someone says that something isn't possible, I get really curious to see if it is really the case.
+> 
+> So technically, the screen can't render single pixels. When I was working on this, I learned that the provided OLED screen is divided into 'tiles,' where each tile controls a chunk of LEDs on the screen. But, we can 'fake' the rendering of single pixels by pushing the screen a byte buffer whose binary only has a single '1.' This renders only one pixel on the screen.
+>
+> So, no, it is technically not possible to render images on the screen pixel-by-pixel. However, yes, we can render individual pixels on the screen via the method I described above.
+>
+> **Q. Okay, that's great. But, can it actually render something meaningful?**
+> 
+> I didn't think it was enough to prove my point to just render single pixels. So, I wrote my own graphics library. 
+> 
+> The library supports the rendering of single pixels and also the rendering of lines between two points. The library only updates tiles on the screen where changes took place, so the refresh rate is actually really high.
+>
+> As a proof of functionality, I built a particle simulation above my graphics library. It simulates fireworks! Each particle is affected by gravity and is given an initial random velocity at startup. The result is really cool!
+>
+> The graphics library can be found in my lab 2 repo. It's completely seperate and modular, so feel free to spread the word. I'd love to see others take advantage of the ability to render single points on the screen!
+> 
+> ## **Q. But why...?**
+> 
+> This is my coping mechanism for not getting a CS class.

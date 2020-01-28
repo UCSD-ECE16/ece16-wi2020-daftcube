@@ -206,7 +206,7 @@ Date: 01/08/2020 (Happy Birthday to Me)
 >
 > I implemented the timer as a finite state machine (FSM). Every time loop is called, I use a switch statement to select which logic to run depending on the current state of my FSM. Here is a rundown of each state's behavior:
 >
-> ![Image of Challenge](fig/Lab1_Challenge3_FSM.png)
+> ![Image](fig/Lab1_Challenge3_FSM.png)
 >
 > - **Start State**: If the button is pressed, transition to the following state.
 > - **Counting Up**: Increments an internal timer by one millisecond. If the timer exceeds 1000 milliseconds, the addTimer() function is called and the internal timer is reset. Within the addTimer() function, the global timer is incremented by one and a message is output through the serial port. If the button is released, the internal timer is reset and the program transitions to the next state.

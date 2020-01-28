@@ -1,4 +1,4 @@
-#if ACCEL
+#if OTHER_CHALLENGES
 
 int accelZ_calibratedAverage = 2450;
 int accelY_calibratedAverage = 1822;
