@@ -7,33 +7,23 @@ const int pwmBitResolution = 8;
 
 // MOTOR VARs
 int motorPin = 5;
+int accelZ = A0;
 
 void setup()
 {
   setupMotor();
   DaftDrawLib_initDisplay();
   Serial.begin(9600);
-  
 }
-
-int pixelX = 0;
-int pixelY = 0;
-bool state = true;
 
 void loop()
 {
-  for(int x = 0; x < 128; x++)
-  {
-    for(int y = 0; y < SCREEN_PIXEL_HEIGHT; y++)
-    {    
-      DaftDrawLib_setPixel(x, y, state);
-      DaftDrawLib_flush();
-    }
-    
-  }
-
-  Serial.println("Flipping state!");
-  state = !state;
+  buzzMotor(255);
+  delay(1000);
+  buzzMotor(127);
+  delay(1000);
+  buzzMotor(0);
+  delay(1000);
 }
 
 // ========== Motor Code =========//

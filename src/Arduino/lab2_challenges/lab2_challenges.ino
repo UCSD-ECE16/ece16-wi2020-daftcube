@@ -1,2 +1,3 @@
 #define FADING_BUZZER false
-#define FIREWORKS true
+#define FIREWORKS false
+#define ACCEL true

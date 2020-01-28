@@ -112,26 +112,47 @@ Date: 01/16/2020
 > When I just hit enter in the Serial Monitor with the Carriage Return option selected, I receive the byte 13. **This means that the decimal value for CR is 13.**
 
 ## Challenge 1: Fading Buzzer
-
+>
+> ![Image](fig/Lab2/Lab2_Challenge1.gif)
+>
 > **Q. Which pin does the code ask you to use for the motor?**
 >
 > We use pin 5 for the motor.
 > 
 > **Q. Why can’t we achieve this speed variation using a digitalWrite and instead has to use ledcWrite?**
 > 
-> 
+> We can't use digitalWrite because digitalWrite only supports a binary signal; the digital pins can only output ~= 3.3 volts in the HIGH state and ~= 0 volts in the LOW state. The ledcWrite family of functions are special because they directly interface with hardware on the MCU to tie the physical pulse-width modulator to the pin, enabling simulated variable states.
 
 ## Challenge 2: Gesture Detection
 
 > **Q. What are some different logics you tried and why? What are some situations where you noticed your detection algorithm doesn’t work well?**
 >
+> At first, I tried to make a fancy system that used arrays to store a history of samples and use the history to generate an upper and lower bound at runtime. This worked to a certain extent, but encountered several issues. Sometimes, the random noise from the sensor would cause the auto-calculated threshold to be too large or small. Next, if taps were made rapidly in succession, the entire system's threshold would extend to encompass the taps and future taps would not be registered for a set period of time.
+>
+> Of course, there are methods to tune the above system, but I found a raw, manually-set threshold based on the statistical methods I outlined in Tutorial 1 to be pretty bulletproof for most cases. I spent quite a bit of time trying to tune the above system, but at a certain point I couldn't justify spending more time on it when the manually calibrated method just _worked._ **Engineering is all about tradeoffs!**
+> 
+> For the exact method, checked if the difference between the manually calibrated average and the sample is greater than the threshold for each axis.
+>
+> Upon further testing, I found an issue where the system would detect multiple duplicate taps for a single tap. To fix this issue, I made a simple "debounce" boolean variable. When true, it causes the detectTap() to resolve as false. I set it to true after the first tap, then set it false once a tap is no longer within the threshold. This prevents duplicate taps from being detected!
+>
+> For the last part of the question, everything above this point assumes that the accelerometer is more or less level and stationary. When rotated, the force of gravity provides an acceleration on each axis, adjusting the resting value. If we want to not make this assumption, and entire redesign is needed.
+>
 > **Q. Provide a plot showing 5 taps and the threshold used.** 
 >
+> ![Image](fig/Lab2/Lab2_FiveTaps.png)
+>
+> I also plotted the threshold bounds and the average line on the serial monitor. To accomplish this at any reasonable runtime, I had to crank up the baud rate to 115200.
+>
+> I used a threshold of +/- 75.
+> 
 > **Q. Include a video of you tapping on the accelerometer and the OLED counting each time.**
+> 
+> ![Image](fig/Lab2/Lab2_FiveTapsOLED.gif)
 
 ## Challenge 3: Read / Write to OLED
 
-> Q. Video of a message typed into the serial monitor and appearing on the OLED. This video should be shot WITHOUT moving the camera. 
+> Q. Video of a message typed into the serial monitor and appearing on the OLED. This video should be shot WITHOUT moving the camera.
+>
 > Q. What happens if you write a really long message? Why?
 
 ## Needless Experiment 0: Render to Any Pixel on OLED

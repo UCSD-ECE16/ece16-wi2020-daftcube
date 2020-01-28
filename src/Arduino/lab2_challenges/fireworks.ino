@@ -12,10 +12,10 @@
 #define FRAMES_PER_SECOND 30  // Framerate
 #define DELTA_TIME .0333      // 1 Second / Framerate
 
-#define PERSISTENT_COUNT 4
+#define PERSISTENT_COUNT 5
 
-#define MAX_SUBEMITTERS_PER_FIREWORK 10
-#define MIN_SUBEMITTERS_PER_FIREWORK 5
+#define MAX_SUBEMITTERS_PER_FIREWORK 20
+#define MIN_SUBEMITTERS_PER_FIREWORK 10
 
 #define MIN_FIREWORK_SPAWN_X 32
 #define MAX_FIREWORK_SPAWN_X 96
@@ -131,6 +131,7 @@ void setupLightFx()
 {
   ledcSetup(LED_FX_CHANNEL, LED_FX_FREQUENCY, LED_FX_PWM_BIT_RESOLUTION);
   ledcAttachPin(LIGHT_FX_PIN, LED_FX_CHANNEL);
+  ledcAttachPin(5, LED_FX_CHANNEL);
 }
 
 // Hopefully not really...
@@ -442,7 +443,7 @@ void moveSubParticle(int index, bool calculateTrail)
   float lastPosY = subParticles[index].posY[0];
   
   // Acceleration!
-  subParticles[index].velocityY -= (GRAVITY * DELTA_TIME); // GRAVITY ACCELERATION IN M/S^2!
+  subParticles[index].velocityY -= (GRAVITY * 2 * DELTA_TIME); // GRAVITY ACCELERATION IN M/S^2!
 
   // Translation!
   subParticles[index].posX[0] += subParticles[index].velocityX * DELTA_TIME;
