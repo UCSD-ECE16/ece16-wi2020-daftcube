@@ -27,15 +27,7 @@ Date: 1/30/2020
 >    
 >    if "ello" in a:
 >        print("ello is in a!")
->    
->    hiHowAreYou()
 >
->def hiHowAreYou():
->    original_list = ['hi',1,2,'you']
->    new_list = original_list
->    newer_list = new_list[1:3]
->    newer_list[0:2] = ['how','are']
->    print(original_list)
 >
 >if __name__ == "__main__":
 >    main()
@@ -66,3 +58,10 @@ Date: 1/30/2020
 > Something
 >
 >
+
+## Pre-Challenge Refactors
+>
+> I improved upon the Message library we built in the last lab. Instead of only displaying one message, I built a system that displays the new message and the previous two on the lines above. In exchange for this feature, we sacrifice the ability to print messages to a specific line.
+>
+
+## Challenge 1
