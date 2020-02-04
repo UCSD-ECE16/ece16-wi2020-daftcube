@@ -131,7 +131,6 @@ void setupLightFx()
 {
   ledcSetup(LED_FX_CHANNEL, LED_FX_FREQUENCY, LED_FX_PWM_BIT_RESOLUTION);
   ledcAttachPin(LIGHT_FX_PIN, LED_FX_CHANNEL);
-  ledcAttachPin(5, LED_FX_CHANNEL);
 }
 
 // Hopefully not really...
