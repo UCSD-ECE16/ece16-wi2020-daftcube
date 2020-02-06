@@ -14,6 +14,7 @@
 #include "U8x8lib.h"
 
 #define OLED_RESET 4 // this value resets the OLED
+#define CHAR_WIDTH 16
 
 U8X8_SSD1306_128X32_UNIVISION_HW_I2C u8x8(OLED_RESET);
 bool OledAdvanced_wasInitialized = false;
@@ -70,7 +71,15 @@ void printToScreen(String str)
   for(int i = 0; i < 3; i++)
   {
     u8x8.setCursor(0, 2-i);
-    u8x8.print(OledAdvanced_previousMessages[i]);
+    if (OledAdvanced_previousMessages[i].length() > CHAR_WIDTH)
+    {
+      u8x8.print(OledAdvanced_previousMessages[i].substring(0, CHAR_WIDTH));
+    }
+    else
+    {
+      u8x8.print(OledAdvanced_previousMessages[i]);
+    }
+    
   }
 }
 

@@ -45,17 +45,30 @@ Date: 1/30/2020
 ## Tutorial 2: Numpy and Pyserial
 
 >
+> _Quick Note: I'm using the encoding fix that was posted in Canvas instead of the code from the lab document. Answers may vary for this reason._
+>
 > **Q. Try sending without the .encode. What happens?**
 >
-> Something
+> We get the following error:
+> ```
+> TypeError: unicode strings are not supported, please encode to bytes: 'Hello'
+> ```
+> There must be something about either the implementation of the PySerial library or the Serial protocol as a transport layer that prevents the use of unicode characters. Thus, we must convert to a format that it can accept, which happens to be UTF-8.
+>
+> The interesting thing about UTF-8 is that it is a variable-width encoding. This means that some characters exist that are represented with more than one byte. So, if we try to send characters from other languages, especially non-latin languages, we might encounter some problems where our Arduino serial reader parses a single character as two characters instead of one.  
 >
 > **Q. Identify in the above code, (1) which python command prints to the python’s own console, and (2) which python command prints to the serial port to the MCU?**
 >
-> Something
+> Prints to own console...
+>```py
+>
+>```
 >
 > **Q. What happens if you take out the \n in the string? Why?**
 >
-> Something
+> Nothing will print on the screen. This is  because the newline character is our message delimiter in our very simple communications protocol. 
+>
+> Without the newline character, our protocol does not know when a given message terminates and a new one begins. Specifically, in our Arduino code, we continue writing to a receive buffer until we reach that character. Without the character, the Arduino will continue writing to the buffer forever without actually writing a message. There could even be an ArrayOutOfBounds error somewhere in there.
 >
 >
 

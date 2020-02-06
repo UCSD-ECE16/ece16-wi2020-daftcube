@@ -1,8 +1,8 @@
 #if RECEIVE_ADVANCED
 
 #define MESSAGE_HISTORY 16
-#define BAUD_RATE 115200
-#define CHAR_DELIMITER 13
+#define BAUD_RATE 9600
+#define CHAR_DELIMITER 10 // Newline
 
 struct serialMessage ReceiveAdvanced_messageHistory[MESSAGE_HISTORY];
 
@@ -34,12 +34,11 @@ bool nonblockingReceive()
   while(Serial.available() > 0)
   {
     char incomingChar = Serial.read();
-    Serial.print(incomingChar);
-    ReceiveAdvanced_currentPositionInBuffer++;
 
     if (ReceiveAdvanced_currentPositionInBuffer < BUFFER_SIZE) 
     {
       ReceiveAdvanced_buffer[ReceiveAdvanced_currentPositionInBuffer] = incomingChar;
+      ReceiveAdvanced_currentPositionInBuffer++;
       
       // If the character is the delimiter, create a new message!
       if (incomingChar == CHAR_DELIMITER)
@@ -106,14 +105,30 @@ void resetSerialVariables()
  */
 struct serialMessage getMostRecentMessage()
 { 
-  for(int i = 0; i < 8; i++)
-  {
-    printDebug (ReceiveAdvanced_messageHistory[i]);
-  }
-  
   return ReceiveAdvanced_messageHistory[0];
 }
 
+/*
+ * extractStringFromMessage(struct serialMessage msg)
+ * 
+ * Returns a string representation of the received buffer.
+ * 
+ * TODO optimize.
+ */
+String extractStringFromMessage(struct serialMessage msg)
+{
+  char actualString[msg.actualBuffSize + 1];
+
+  // Copy chars into
+  for(int i = 0; i < msg.actualBuffSize; i++)
+  {
+    actualString[i] = msg.buff[i];
+  }
+
+  actualString[msg.actualBuffSize] = '\0'; // NULL terminate.
+
+  return String(actualString);
+}
 
 void printDebug(struct serialMessage msg)
 {

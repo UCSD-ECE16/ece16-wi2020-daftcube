@@ -29,6 +29,7 @@ void loop() {
   if (nonblockingReceive())
   {
     struct serialMessage newestMsg = getMostRecentMessage();
-    printToScreen(newestMsg.buff);
+    String str = extractStringFromMessage(newestMsg);
+    printToScreen(str);
   }
 }
