@@ -114,33 +114,149 @@ Date: 1/30/2020
 > #### Numpy Array
 > **Q. Show the code - Make an Numpy Array called test_array  from a list = [0,10,4,12]. Subtract 20 from the test_array, what do you get? What is the shape of the test_array**
 >
+> Below is the code to make an array from the given list.
+>
+> ```py
+> def numpyArray0():
+>     test_list = [0,10,4,12]
+>     test_array = numpy.array(test_list)
+>     print(test_array)
+>     test_array = test_array - 20
+>     print(test_array)
+> ```
+>
+> If we subtract 20 from test_array using operators, we get a matrix with each element being 20 less than the original values.
+>
+> This matrix is a 4x1 matrix. If we specifically print the shape, it will return...
+> ```
+> test_array is a (4,) matrix.
+> ```
+>
 > **Q. Show the code - Make a 2D array of test_2D_array from...** 
 > ```
 > [0,10,4,12]
 > [1,20,3,41]
 > ```
 >
+> Here is the code to do this!
+> ```python
+> def numpyArray1():
+>     test_2d_array = numpy.array([[0,10,4,12], [1,20,3,41]])
+>     print(test_2d_array)
+>     print("test_2d_array is a " + str( test_2d_array.shape ) + " matrix.")
+> ```
+>
 > ---
 > #### Zeros and Ones
 > **Q. Make a 2D array of zeros with shape of 10x20 and then print it out**
 > 
+> Here is the code to do that...
+>
+> ```python
+> def numpyZeros():
+>    test_zeros_list = numpy.zeros((10,20))
+>    print(test_zeros_list)
+> ```
+>
+> And the associated output...
+> 
+> ```python
+> [[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+> [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+> ```
+>
 > ---
 >
 > #### hstack and vstack
 > **Q. Show the code - Out of the test_array, create the following using hstack and vstack. **
+>
 > ```
-> The format on the lab report was impossible to transpose quickly so refer to it on the lab.
+> The format of the "following" matrix on the lab report was impossible to transpose quickly so refer to it on the lab.
 > ```
+>
+> Here is the code to accomplish the task...
+>
+> ```python
+> def vhstackDemo():
+>     print("---------------------------")
+>     print("vhstack Demo")
+>     
+>     basicUnit = numpy.array([0, 10, 4, 12])
+>     horizontal = numpy.hstack((basicUnit, basicUnit))
+>     vertical = horizontal
+>     for i in range(3):
+>        vertical = numpy.vstack((vertical, horizontal))
+>     print(vertical)
+> ```
+>
 > ---
 > #### arange
 > **Q. Show the code - Using arange, make an array called arange_array1 to equal [-3, 3,9,15] and arange_array2 to equal [ -7,  -9, -11, -13, -15, -17, -19]**
+>
+> Here is the code to do that!
+>
+> ```python
+> def arangeDemo():
+>     print("---------------------------")
+>     print("arange Demo")
+>     arange_array1 = numpy.arange(-3, 16, 6) # Second parameter is exclusive
+>     arange_array2 = numpy.arange(-7, -20, -2)
+>     print(arange_array1)
+>     print(arange_array2)
+> ```
+> And here is the output...
+>
+> ```
+> arange Demo
+> [-3  3  9 15]
+> [ -7  -9 -11 -13 -15 -17 -19]
+> ```
 >
 > ---
 >
 > #### linspace
 > **Q. Make an array call linspace_array using linspace that goes from 0 to 100 with 49 steps.**
 >
+> Here is the following code to do that.
+>
+> ```python
+> def linspaceDemo():
+>     print("---------------------------")
+>     print("linspace Demo")
+>     linspace_array = numpy.linspace(0, 100, num=49)
+>     print(linspace_array)
+> ```
+>
+> And the output...
+>
+> ```
+> linspace Demo
+> [  0.           2.08333333   4.16666667   6.25         8.33333333
+> 10.41666667  12.5         14.58333333  16.66666667  18.75
+>  20.83333333  22.91666667  25.          27.08333333  29.16666667
+>  31.25        33.33333333  35.41666667  37.5         39.58333333
+>  41.66666667  43.75        45.83333333  47.91666667  50.
+>  52.08333333  54.16666667  56.25        58.33333333  60.41666667
+>  62.5         64.58333333  66.66666667  68.75        70.83333333
+>  72.91666667  75.          77.08333333  79.16666667  81.25
+>  83.33333333  85.41666667  87.5         89.58333333  91.66666667
+>  93.75        95.83333333  97.91666667 100.        ]
+> ```
 > **Q. How does linspace and arange differ? When might you use one over the other?**
+>
+> The arange function returns an array with the elemented between start and stop by counting up by the given step. It's kind of like a for loop.
+>
+> The linspace function returns an array that includes evenly-spaced samples between a high-end and a low end by dividing the given range into samples.
+>
+> You might use linspace if you want to construct an array composed of values between two numbers while knowing exactly how many samples between those values are desired. You might use arange instead of the number of samples between the two numbers is unknown. You might also use arange if you want even steps between the two endpoints rather than a number of predetermined subdivisions.
 >
 > ---
 >
@@ -162,6 +278,9 @@ Date: 1/30/2020
 >
 > **Q. Show your code - Now solve the above indexing and slicing problem by writing the code using array assignment. **
 >
+> ---
+> #### Setting values of array from CSV
+> **Q. Using fromstring, vstack, and a for loop, create an array of 100x4 from s: [[1,2,3,4],[1,2,3,4],[1,2,3,4]…..[1,2,3,4]].**
 >
 
 
