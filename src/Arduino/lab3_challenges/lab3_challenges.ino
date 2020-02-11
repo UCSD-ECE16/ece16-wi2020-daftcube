@@ -9,6 +9,7 @@
 void setup()
 {
   setupADC();
+  setupLed();
   initDisplay();
   //setupMotor();
   Serial.begin(115200);

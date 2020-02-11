@@ -31,41 +31,41 @@ bool detectTap(){
 
 void printADC(){ //print the ADC values
   
-  Serial.print("Z:");
-  Serial.print(accelZ_Val);
-  Serial.print(",");
-  Serial.print("Y:");
-  Serial.print(accelY_Val);
-  Serial.print(",");
-  Serial.print("X:");
-  Serial.print(accelX_Val);  
-  Serial.print(",");
-  Serial.print("Z Upper Bound:");
-  Serial.print(accelZ_calibratedAverage + accelZ_threshold);
-  Serial.print(",");
-  Serial.print("Z Lower Bound:");
-  Serial.print(accelZ_calibratedAverage - accelZ_threshold);
-  Serial.print(",");
-  Serial.print("Z Calibrated Avg:");
-  Serial.print(accelZ_calibratedAverage);
-  Serial.print(",");
-  Serial.print("Y Upper Bound:");
-  Serial.print(accelY_calibratedAverage + accelY_threshold);
-  Serial.print(",");
-  Serial.print("Y Lower Bound:");
-  Serial.print(accelY_calibratedAverage - accelY_threshold);
-  Serial.print(",");
-  Serial.print("Y Calibrated Avg:");
-  Serial.print(accelY_calibratedAverage);
-  Serial.print(",");
-  Serial.print("X Upper Bound:");
-  Serial.print(accelX_calibratedAverage + accelX_threshold);
-  Serial.print(",");
-  Serial.print("X Lower Bound:");
-  Serial.print(accelX_calibratedAverage - accelX_threshold);
-  Serial.print(",");
-  Serial.print("X Calibrated Avg:");
-  Serial.println(accelX_calibratedAverage);
+  printSerial("Z:");
+  printSerial(accelZ_Val);
+  printSerial(",");
+  printSerial("Y:");
+  printSerial(accelY_Val);
+  printSerial(",");
+  printSerial("X:");
+  printSerial(accelX_Val);  
+  printSerial(",");
+  printSerial("Z Upper Bound:");
+  printSerial(accelZ_calibratedAverage + accelZ_threshold);
+  printSerial(",");
+  printSerial("Z Lower Bound:");
+  printSerial(accelZ_calibratedAverage - accelZ_threshold);
+  printSerial(",");
+  printSerial("Z Calibrated Avg:");
+  printSerial(accelZ_calibratedAverage);
+  printSerial(",");
+  printSerial("Y Upper Bound:");
+  printSerial(accelY_calibratedAverage + accelY_threshold);
+  printSerial(",");
+  printSerial("Y Lower Bound:");
+  printSerial(accelY_calibratedAverage - accelY_threshold);
+  printSerial(",");
+  printSerial("Y Calibrated Avg:");
+  printSerial(accelY_calibratedAverage);
+  printSerial(",");
+  printSerial("X Upper Bound:");
+  printSerial(accelX_calibratedAverage + accelX_threshold);
+  printSerial(",");
+  printSerial("X Lower Bound:");
+  printSerial(accelX_calibratedAverage - accelX_threshold);
+  printSerial(",");
+  printSerial("X Calibrated Avg:");
+  printlnSerial(accelX_calibratedAverage);
   
 }
 
