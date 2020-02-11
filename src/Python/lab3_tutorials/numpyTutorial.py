@@ -62,6 +62,7 @@ def main():
     vhstackDemo()
     arangeDemo()
     linspaceDemo()
+    print(1/50 * 1000000)
 
 if __name__== "__main__":
     main()
