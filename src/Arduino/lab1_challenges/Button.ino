@@ -22,7 +22,7 @@ void setupButton()
  * Returns true when the button is pressed, false otherwise.
  */
 bool getButton()
-{
+{ 
   bool currentState = digitalRead(BUTTON_INPUT_PIN);
   return !currentState; // We're using a pull-up resistor, so we must invert the result.
 }

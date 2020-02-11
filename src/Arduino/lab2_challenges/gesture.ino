@@ -30,6 +30,7 @@ bool detectTap(){
 }
 
 void printADC(){ //print the ADC values
+  /*
   Serial.print("Z:");
   Serial.print(accelZ_Val);
   Serial.print(",");
@@ -65,7 +66,7 @@ void printADC(){ //print the ADC values
   Serial.print(",");
   Serial.print("X Calibrated Avg:");
   Serial.println(accelX_calibratedAverage);
-
+  */
 }
 
 #endif

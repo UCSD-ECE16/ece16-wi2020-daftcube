@@ -10,6 +10,8 @@ void runTimerOLED() {
   {
     subTimerMs = millis() + 1000;
     timer_seconds -= 1;
+    Serial.print("Current Time: ");
+    Serial.println(timer_seconds);
     if (timer_seconds <= 0) { timer_seconds = 0; }
 
     String stringTime = String(timer_seconds);

@@ -1,6 +1,6 @@
 #define CHALLENGE_1 false
-#define OTHER_CHALLENGES false
-#define FIREWORKS true
+#define OTHER_CHALLENGES true
+#define FIREWORKS false
 
 #if OTHER_CHALLENGES
 
@@ -25,7 +25,7 @@ void loop()
 void Lab_C2C3()
 {
   readADC();
-  printADC();
+  //printADC();
 
   if ( detectTap() )
   {
