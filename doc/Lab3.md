@@ -318,7 +318,7 @@ Date: 1/30/2020
 >
 > #### Setting values of arrays
 >
-> **Q. Show your code - Now solve the above indexing and slicing problem by writing the code using array assignment. **
+> **Q. Show your code - Now solve the above indexing and slicing problem by writing the code using array assignment.**
 >
 > I wrote this code and it did the trick.
 > ```python
@@ -367,7 +367,7 @@ Date: 1/30/2020
 >
 > **Demo of working serial communication!**
 >
-> Todo Image (I have it on my phone.)
+> ![Image](fig/Lab3/challenge1_deliveable.gif)
 >
 ## Challenge 2
 >
