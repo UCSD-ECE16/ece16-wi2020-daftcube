@@ -31,6 +31,8 @@ bool detectTap(){
 
 void printADC(){ //print the ADC values
   
+  printSerial("Microseconds: ");
+  printSerial(micros());
   printSerial("Z:");
   printSerial(accelZ_Val);
   printSerial(",");

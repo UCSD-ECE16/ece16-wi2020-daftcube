@@ -56,32 +56,32 @@ void printSerial(int msg)
 void printSerial(String msg)
 {
   #if USE_BLUETOOTH
-  SerialBt.println(msg);
+  SerialBt.print(msg);
   #endif
 
   #if USE_SERIAL_PORT
-  Serial.println(msg);
+  Serial.print(msg);
   #endif
 }
 
 char serialRead()
 {
-  #if USE_BLUETOOTH
-  return SerialBt.read();
-  #endif
-
   #if USE_SERIAL_PORT
   return Serial.read();
+  #endif
+  
+  #if USE_BLUETOOTH
+  return SerialBt.read();
   #endif
 }
 
 int serialAvailable()
 {
-  #if USE_BLUETOOTH
-  return SerialBt.available();
-  #endif
-
   #if USE_SERIAL_PORT
   return Serial.available();
+  #endif
+  
+  #if USE_BLUETOOTH
+  return SerialBt.available();
   #endif
 }

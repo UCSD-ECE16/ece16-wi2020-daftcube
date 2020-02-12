@@ -11,8 +11,9 @@ void setup()
   setupADC();
   setupLed();
   initDisplay();
-  //setupMotor();
   setupSerial();
+
+  delay(2000);
 }
 
 void loop()

@@ -371,5 +371,22 @@ Date: 1/30/2020
 >
 ## Challenge 2
 >
+> **Q. What happens if you don’t decode the incoming char?**
 >
+> Nothing. Because we use...
+> ```python
+> if( byte_recv == '\n'):
+> ```
+> ...to check for the end of a packet, we never reach the end of a packet. This is because the byte value of the received byte does not equal its string representation.
+>
+> **Q. Try removing the logic for checking if the data_array is empty and always vstack even if the data_array is empty. What is the error that gets thrown? Why?**
+>
+> The following error is thrown:
+> ```
+> ValueError: all the input array dimensions except for the concatenation axis must match exactly
+> ```
+> This error is thrown because numpy does not know how to handle the vertical addition of different-sized arrays. Matrices must be of a consistent size (2x2, 3x3, 1x4). An error is thrown instead of the alternative because doing something like this is usually indicative of code that isn't working as intended.
+>
+> **Q. Try removing the 1 second delay on the MCU when starting data sending. Describe what happens?**
+
 >

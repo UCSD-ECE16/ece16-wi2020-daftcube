@@ -9,11 +9,11 @@ void receiveMessage() {
     
     
     char incomingChar = serialRead(); // read byte from serial
-    if (incomingChar == 13){
+    if (incomingChar == 10){
       
 
-      showMessage("                   ", 1, false); // Clear line
-      showMessage(in_text, 1, false);
+      //showMessage("                   ", 1, false); // Clear line
+      //showMessage(in_text, 1, true);
       in_text_index = 0;
       memset(in_text,0,20); // this will clear the in_text buffer
     }
@@ -46,10 +46,8 @@ void checkMessage(){
   
   if (message == "start data")
   {
-    setLed(true);
     sending_data = true;
     delay(1000);
-    setLed(false);
   }
   else if (message == "stop data")
   {
