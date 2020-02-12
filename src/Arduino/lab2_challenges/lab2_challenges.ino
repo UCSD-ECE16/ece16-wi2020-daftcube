@@ -1,6 +1,6 @@
 #define CHALLENGE_1 false
-#define OTHER_CHALLENGES true
-#define FIREWORKS false
+#define OTHER_CHALLENGES false
+#define FIREWORKS true
 
 #if OTHER_CHALLENGES
 

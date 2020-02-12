@@ -396,7 +396,33 @@ Date: 1/30/2020
 > **Q. Start with Baud rate of 115200. What is your calculated sampling rate when you set the sampling rate to 10Hz,50Hz,100Hz,1000Hz on the MCU. Make a plot (using a spreadsheet program) of the actual sampling rate (y-axis) vs expected sampling rate (x-axis).**
 >
 > ![Image](fig/Lab3/challenge3Chart.png)
->
+> 
+> I retrieved the following values...
+> 
+> | Sampling Rate | Actual Sampling Rate |
+> |---------------|----------------------|
+> | 10            | 9.999680818          |
+> | 50            | 49.99151659          |
+> | 100           | 99.96516366          |
+> | 1000          | 507.2708827          |
+> 
+> It works incredibly well until we get to high frequencies, where we got completely unexpected behavior. This could be for two reasons. First, the baud rate might be too slow for our desired transmission speed. Second, it could be that microseconds aren't good enough for that high of a refresh rate, or another part of our program has overhead that exceeds the time required to reasonably take 1000 samples every second.
+
 > **Q. How does this change with Baud rate 9600 vs 115200 vs 230400 vs 460800. For 1000Hz, make a plot of the actual sampling rate (y-axis) vs Baud Rate (x-axis).**
 >
+> ![Image](fig/Lab3/baudVsFrequency.png)
+> 
+> I retrieved the following values...
+> 
+> | Sampling Rate | Actual Sampling Rate |
+> |---------------|----------------------|
+> | 9600          | 41.09732344          |
+> | 115200        | 507.2708827          |
+> | 230400        | 932.1507259          |
+> | 460800        | 998.1448621          |
+>
+> It appears that the actual sampling rate increases fairly linearly until a critical point near a transmission rate of 230400 bits/second. This is because after that point, we have enough bandwidth to send at our desired frequency without our data being bottlenecked and throttled. 
+>
 > **Q. What happens if you use millis instead of micros for timing and Why?**
+> 
+> 

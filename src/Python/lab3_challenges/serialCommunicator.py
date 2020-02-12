@@ -66,7 +66,7 @@ def calc_sampling_rate():
 
 def setup_serial():
     serial_name = 'COM5'
-    ser = serial.Serial(serial_name, 115200)  # open serial port
+    ser = serial.Serial(serial_name, 460800)  # open serial port
     print(ser.name)         # check which port was really used
     return ser
 
