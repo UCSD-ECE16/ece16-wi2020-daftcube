@@ -371,6 +371,8 @@ Date: 1/30/2020
 >
 ## Challenge 2
 >
+> See challenge 3 for functioning demo of python reading from serial port.
+>
 > **Q. What happens if you don’t decode the incoming char?**
 >
 > Nothing. Because we use...
@@ -393,6 +395,11 @@ Date: 1/30/2020
 >
 ## Challenge 3
 > 
+> Here's a gif of challenge 3 working on a 1000 Hz test. It features my new and improved printing library that prints the message history to the screen as well as the current screen.
+> ![Image](fig/Lab3/challenge3Works.gif)
+>
+> Here's another gif that has a closer view of the console on a 50Hz test. I know I didn't add a gif for challenge 2, but this gif demonstrates that the deliverable for challenge 2 (python reading from the serial port) works in addition to the latency calculation.
+>
 > **Q. Start with Baud rate of 115200. What is your calculated sampling rate when you set the sampling rate to 10Hz,50Hz,100Hz,1000Hz on the MCU. Make a plot (using a spreadsheet program) of the actual sampling rate (y-axis) vs expected sampling rate (x-axis).**
 >
 > ![Image](fig/Lab3/challenge3Chart.png)
@@ -425,4 +432,7 @@ Date: 1/30/2020
 >
 > **Q. What happens if you use millis instead of micros for timing and Why?**
 > 
+> The frequency of transmission is slowed way down. A transmission at our current setting of 1000Hz now arrives once every second. This makes sense, because a millisecond is about 1000 times longer than a microsecond, and because all of our backend math assumes that we're working with microseconds, it should take about 1000 times as long when compared to using microseconds as our measure of time.
+## Challenge 4
+> Serial over bluetooth works!
 > 

@@ -1,6 +1,6 @@
-#define USE_BLUETOOTH false
-#define USE_SERIAL_PORT true
-#define BAUD_RATE 460800
+#define USE_BLUETOOTH true
+#define USE_SERIAL_PORT false
+#define BAUD_RATE 115200
 
 #if USE_BLUETOOTH
 
