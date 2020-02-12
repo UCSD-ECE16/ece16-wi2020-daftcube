@@ -77,8 +77,9 @@ def main():
     ser.write("stop data\n".encode('utf-8'))
     ser.close()
     
-    print("The latency was " + str(calc_sampling_rate()))
-    
+    sampRate = calc_sampling_rate()
+    print("The latency was " + str(sampRate))
+    print("The frequency was " + str(1/(sampRate/1000)))
 
 
 if __name__== "__main__":
