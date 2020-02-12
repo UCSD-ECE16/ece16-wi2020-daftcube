@@ -8,7 +8,7 @@ Created on Tue Feb  4 10:11:13 2020
 import serial
 
 def setup_serial():
-    serial_name = 'COM5'
+    serial_name = 'COM6'
     ser = serial.Serial(serial_name, 115200)  # open serial port
     print(ser.name)         # check which port was really used
     return ser

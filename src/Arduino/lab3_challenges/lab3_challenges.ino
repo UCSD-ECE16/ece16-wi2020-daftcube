@@ -12,7 +12,7 @@ void setup()
   setupLed();
   initDisplay();
   //setupMotor();
-  Serial.begin(115200);
+  setupSerial();
 }
 
 void loop()

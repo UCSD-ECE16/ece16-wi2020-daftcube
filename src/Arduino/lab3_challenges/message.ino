@@ -5,10 +5,10 @@ int in_text_index = 0;
 
 // ==== Message CODE ====== //
 void receiveMessage() {
-  if (Serial.available() > 0) { 
+  if (serialAvailable() > 0) { 
     
     
-    char incomingChar = Serial.read(); // read byte from serial
+    char incomingChar = serialRead(); // read byte from serial
     if (incomingChar == 13){
       
 
@@ -24,7 +24,7 @@ void receiveMessage() {
   }
 }
 
-int sampling_rate = 1; //sampling rate in Hz
+int sampling_rate = 50; //sampling rate in Hz
 unsigned long sampling_delay = calcSamplingDelay(sampling_rate); //microseconds between samples
 unsigned long last_sample_time = 0; //microsecond of last sample
 

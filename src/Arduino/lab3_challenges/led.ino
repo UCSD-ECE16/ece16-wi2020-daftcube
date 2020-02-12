@@ -1,4 +1,4 @@
-#define LED_PIN 27
+#define LED_PIN LED_BUILTIN
 
 void setupLed()
 {

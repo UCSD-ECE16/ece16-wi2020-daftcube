@@ -1,5 +1,5 @@
-#define USE_BLUETOOTH false
-#define USE_SERIAL_PORT true
+#define USE_BLUETOOTH true
+#define USE_SERIAL_PORT false
 #define BAUD_RATE 115200
 
 #if USE_BLUETOOTH
@@ -12,7 +12,7 @@ BluetoothSerial SerialBt;
 void setupSerial()
 {
   #if USE_BLUETOOTH
-  SerialBt.begin(BAUD_RATE);
+  SerialBt.begin("Not-A-Supercomputer");
   #endif
 
   #if USE_SERIAL_PORT
@@ -61,5 +61,27 @@ void printSerial(String msg)
 
   #if USE_SERIAL_PORT
   Serial.println(msg);
+  #endif
+}
+
+char serialRead()
+{
+  #if USE_BLUETOOTH
+  return SerialBt.read();
+  #endif
+
+  #if USE_SERIAL_PORT
+  return Serial.read();
+  #endif
+}
+
+int serialAvailable()
+{
+  #if USE_BLUETOOTH
+  return SerialBt.available();
+  #endif
+
+  #if USE_SERIAL_PORT
+  return Serial.available();
   #endif
 }

@@ -273,17 +273,76 @@ Date: 1/30/2020
 > print(e[1,3]) >>> 2
 > ```
 >
+> I took a visual approach. You can see the breakdown in the graphic; every array element I found corresponds to a certain question via color coding...
+>
+> ![Image](fig/Lab3/numpyMatrixChallenge.png)
+>
+> You can see that my array does indeed fulfill all challenges when input into the following unit test code!
+>
+> ```python
+> import numpy
+> 
+> e = numpy.array([
+>             [12, 3, 1, 2],
+>             [0, 0, 1, 2],
+>             [4, 2, 3, 1]
+>         ])
+> 
+> print("Unit testing e for challenge fulfillment!")
+> print("e[0] == [12, 3, 1, 2]?   " + str(numpy.array_equal(e[0], [12, 3, 1, 2])))     # >>> [12 3 1 2] – Direct Index
+> print("e[1,0] == 0?             " + str(e[1,0] == 0) )   # >>> 0 – Direct Index
+> print("e[:,1]) == [3, 0, 2]?    " + str(numpy.array_equal(e[:,1], [3, 0, 2])))    # >>> [3 0 2]
+> print("e[2, :2] == [4, 2]?      " + str(numpy.array_equal(e[2, :2], [4, 2]))) # >>> [4 2]
+> print("e[2, 2:] == [3, 1]?      " + str(numpy.array_equal(e[2, 2:], [3, 1]))) # >>> [3 1] 
+> print("e[:,2] == [1, 1, 3]?     " + str(numpy.array_equal(e[:,2], [1, 1, 3])))   # >>> [1 1 3]
+> print("e[1,3] == 2?             " + str(e[1,3] == 2))   # >>> 2 – Direct Index
+> print("If any were false, then it was not successful. Otherwise, we're good!")
+> ```
+> The following unit test outputs the following...
+>
+> ```
+> Unit testing e for challenge fulfillment!
+> e[0] == [12, 3, 1, 2]?   True
+> e[1,0] == 0?             True
+> e[:,1]) == [3, 0, 2]?    True
+> e[2, :2] == [4, 2]?      True
+> e[2, 2:] == [3, 1]?      True
+> e[:,2] == [1, 1, 3]?     True
+> e[1,3] == 2?             True
+> If any were false, then it was not successful. Otherwise, we're good!
+> ```
+>
+> Stuff works!
+>
 > ---
+>
 > #### Setting values of arrays
 >
 > **Q. Show your code - Now solve the above indexing and slicing problem by writing the code using array assignment. **
+>
+> I wrote this code and it did the trick.
+> ```python
+> import numpy;
+> 
+> e = numpy.zeros((3,4))
+> 
+> e[0] = [12, 3, 1, 2]
+> e[1,0] = 0
+> e[:,1] = [3, 0, 2]
+> e[2, :2] = [4, 2]
+> e[2, 2:] = [3, 1] 
+> e[:,2] = [1, 1, 3]
+> e[1,3] = 2
+> 
+> print(e)
+> ```
 >
 > ---
 > #### Setting values of array from CSV
 > **Q. Using fromstring, vstack, and a for loop, create an array of 100x4 from s: [[1,2,3,4],[1,2,3,4],[1,2,3,4]…..[1,2,3,4]].**
 >
-
-
+> TODO
+>
 
 ## Pre-Challenge Refactors
 >
@@ -293,3 +352,12 @@ Date: 1/30/2020
 >
 
 ## Challenge 1
+>
+> **Demo of working serial communication!**
+>
+> Todo Image (I have it on my phone.)
+>
+## Challenge 2
+>
+>
+>
