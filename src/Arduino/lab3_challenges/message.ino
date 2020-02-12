@@ -14,6 +14,9 @@ void receiveMessage() {
 
       //showMessage("                   ", 1, false); // Clear line
       //showMessage(in_text, 1, true);
+
+      printToScreen(extractStringFromMessage(in_text, in_text_index));
+      
       in_text_index = 0;
       memset(in_text,0,20); // this will clear the in_text buffer
     }
@@ -24,7 +27,7 @@ void receiveMessage() {
   }
 }
 
-int sampling_rate = 50; //sampling rate in Hz
+int sampling_rate = 10; //sampling rate in Hz
 unsigned long sampling_delay = calcSamplingDelay(sampling_rate); //microseconds between samples
 unsigned long last_sample_time = 0; //microsecond of last sample
 
@@ -44,12 +47,12 @@ void sendData() {
 void checkMessage(){
   String message = String(in_text); // converts in_text into a string
   
-  if (message == "start data")
+  if (message == "start data" && !sending_data)
   {
     sending_data = true;
-    delay(1000);
+    //delay(1000);
   }
-  else if (message == "stop data")
+  else if (message == "stop data" && sending_data)
   {
     sending_data = false;
   }

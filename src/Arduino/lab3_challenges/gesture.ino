@@ -31,16 +31,18 @@ bool detectTap(){
 
 void printADC(){ //print the ADC values
   
-  printSerial("Microseconds: ");
+  //printSerial("Microseconds: ");
   printSerial(micros());
-  printSerial("Z:");
+  printSerial(",");
+  //printSerial("Z:");
   printSerial(accelZ_Val);
   printSerial(",");
-  printSerial("Y:");
+  //printSerial("Y:");
   printSerial(accelY_Val);
   printSerial(",");
-  printSerial("X:");
-  printSerial(accelX_Val);  
+  //printSerial("X:");
+  printlnSerial(accelX_Val);  
+  /*
   printSerial(",");
   printSerial("Z Upper Bound:");
   printSerial(accelZ_calibratedAverage + accelZ_threshold);
@@ -60,14 +62,14 @@ void printADC(){ //print the ADC values
   printSerial("Y Calibrated Avg:");
   printSerial(accelY_calibratedAverage);
   printSerial(",");
-  printSerial("X Upper Bound:");
-  printSerial(accelX_calibratedAverage + accelX_threshold);
-  printSerial(",");
-  printSerial("X Lower Bound:");
-  printSerial(accelX_calibratedAverage - accelX_threshold);
-  printSerial(",");
-  printSerial("X Calibrated Avg:");
-  printlnSerial(accelX_calibratedAverage);
+  //printSerial("X Upper Bound:");
+  //printSerial(accelX_calibratedAverage + accelX_threshold);
+  //printSerial(",");
+  //printSerial("X Lower Bound:");
+  //printSerial(accelX_calibratedAverage - accelX_threshold);
+  //printSerial(",");
+  //printSerial("X Calibrated Avg:");
+  //printlnSerial(accelX_calibratedAverage);*/
   
 }
 

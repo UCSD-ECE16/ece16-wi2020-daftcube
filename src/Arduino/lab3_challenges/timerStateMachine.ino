@@ -17,7 +17,7 @@ void executeTimerTask()
   {
     case WAITING_FOR_TAP:
       
-      showMessage("Tap for Timer!     ", 0, false);
+      //showMessage("Tap for Timer!     ", 0, false);
       
       // Transition to self is implied.
 
@@ -25,7 +25,7 @@ void executeTimerTask()
       if (detectTap())
       {
         // Add to timer and set the subtimer for the first time
-        addTimerOLED();
+        //addTimerOLED();
         subTimer = millis();
 
         
@@ -40,7 +40,7 @@ void executeTimerTask()
       if (detectTap())
       {
         subTimer = millis();
-        addTimerOLED();
+        //addTimerOLED();
       }
 
       // Transition to next state if subtimer expired
@@ -68,7 +68,7 @@ void executeTimerTask()
     case BUZZ:
       
       buzzMotor(255);
-      showMessage("Time's up!        ", 0, false);
+      //showMessage("Time's up!        ", 0, false);
 
       // Transition to self is implied.
 

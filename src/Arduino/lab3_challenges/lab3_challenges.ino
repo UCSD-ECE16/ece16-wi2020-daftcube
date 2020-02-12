@@ -1,16 +1,19 @@
 #define CHALLENGE_1 false
 #define OTHER_CHALLENGES true
 #define FIREWORKS false
+#define OLED_ADVANCED true
 
 #if OTHER_CHALLENGES
 
 // ========   Main   ======== //
 
+int timer_seconds = 0;
+
 void setup()
 {
   setupADC();
   setupLed();
-  initDisplay();
+  setupOled();
   setupSerial();
 
   delay(2000);
@@ -47,7 +50,7 @@ void Lab2_C2C3()
 
   if ( detectTap() )
   {
-    addTimerOLED();
+    //addTimerOLED();
   }
 
   runTimerOLED();

@@ -388,5 +388,15 @@ Date: 1/30/2020
 > This error is thrown because numpy does not know how to handle the vertical addition of different-sized arrays. Matrices must be of a consistent size (2x2, 3x3, 1x4). An error is thrown instead of the alternative because doing something like this is usually indicative of code that isn't working as intended.
 >
 > **Q. Try removing the 1 second delay on the MCU when starting data sending. Describe what happens?**
-
+> 
+> We can get an issue where we catch a "sentence" in mid-transmit, causing half of the transmitted values to be cut off. In the best-case version of this error, none of the commas are lost and we only have a malformed sample. In the worst case version, we miss a comma. In this case, the missed comma will cause the next array to be appended with an incorrect linear dimension, yielding an error.
 >
+## Challenge 3
+> 
+> **Q. Start with Baud rate of 115200. What is your calculated sampling rate when you set the sampling rate to 10Hz,50Hz,100Hz,1000Hz on the MCU. Make a plot (using a spreadsheet program) of the actual sampling rate (y-axis) vs expected sampling rate (x-axis).**
+>
+> ![Image](fig/Lab3/challenge3Chart.png)
+>
+> **Q. How does this change with Baud rate 9600 vs 115200 vs 230400 vs 460800. For 1000Hz, make a plot of the actual sampling rate (y-axis) vs Baud Rate (x-axis).**
+>
+> **Q. What happens if you use millis instead of micros for timing and Why?**
