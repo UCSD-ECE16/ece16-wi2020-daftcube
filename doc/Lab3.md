@@ -339,9 +339,21 @@ Date: 1/30/2020
 >
 > ---
 > #### Setting values of array from CSV
-> **Q. Using fromstring, vstack, and a for loop, create an array of 100x4 from s: [[1,2,3,4],[1,2,3,4],[1,2,3,4]…..[1,2,3,4]].**
+> **Q. Using fromstring, vstack, and a for loop, create an array of 100x4 from s: [[1,2,3,4],[1,2,3,4],[1,2,3,4].....[1,2,3,4]].**
 >
-> TODO
+> Here's my code to complete the task.
+> ```python
+> import numpy
+> 
+> data_string = '1,2,3,4'
+> data_as_array = numpy.fromstring(data_string, dtype=int, sep=',')
+> stack_array = data_as_array[:]
+> 
+> for i in range(100):
+>     data_as_array = numpy.vstack((data_as_array, stack_array))
+> 
+> print(data_as_array)
+> ```
 >
 
 ## Pre-Challenge Refactors
