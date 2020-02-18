@@ -111,3 +111,14 @@ data_array = np.array([[10252533,     1806,     1823,     2255],
 
 np.savetxt("foo.csv", data_array, delimiter=",")
 data_array_from_file = np.genfromtxt('foo.csv', delimiter=',')
+
+data_array = data_array_from_file
+np.savetxt("foo.csv", data_array, delimiter=",")
+data_array_from_file = np.genfromtxt('foo.csv', delimiter=',')
+#Plot stuff. Remember your data format is
+#[time,x,y,z],
+#[time,x,y,z],
+#[time,x,y,z],.....
+#and your plot function should be plot(time,x), plot(time,y), etc
+plt.plot()
+plt.show()

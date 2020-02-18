@@ -64,9 +64,14 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > As we can see, the plt.plot() function plots a line for each column in a numpy matrix. In other words, plt.plot() interprets the input matrix as a list of sets, where each column is a plottable set.
 >
 > ### Tutorial 3: Saving and Reading via IO
+>
 > The file that was to be generated in the tutorial can be found ![here.](data/Lab4/foo.csv)
 >
-## Tutorial 3
+> **Q. Try your best to replicate the above plot by shaking your accelerometer. The above was sampled at 50Hz for 10 seconds. Make a gif of you running your program, shaking your accelerometer, and a plot showing up similar to the one above.**
+>
+> **Q. What is approximately the frequency of oscillation of the x axis signal in the plot above?**
+>
+> ### Tutorial 3
 
 ## Challenge 1
 
