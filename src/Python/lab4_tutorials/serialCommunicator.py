@@ -45,7 +45,7 @@ def receive_sample(ser):
 def receive_data(ser):
     global sample_count
     
-    while sample_count < 100:
+    while sample_count < 50*10:
         try:
             receive_sample(ser)
             
@@ -68,10 +68,46 @@ def calc_sampling_rate():
 def plot():
     global data_array
     
+    np.savetxt("foo.csv", data_array, delimiter=",")
+    data_array_from_file = np.genfromtxt('foo.csv', delimiter=',')
+
+    
     plt.clf()
-    plt.plot(data_array[:,0], data_array[:,1])
-    plt.plot(data_array[:,0], data_array[:,2])
-    plt.plot(data_array[:,0], data_array[:,3])
+    fig, axs = plt.subplots(3)
+    
+    plt.subplot(311)
+    plt.plot(data_array_from_file[:,0], data_array_from_file[:,1])    
+    
+    plt.title("Accelerometer Data")
+    plt.ylabel("X Amplitude")
+    
+    plt.subplot(312)
+    plt.plot(data_array_from_file[:,0], data_array_from_file[:,2])
+    plt.ylabel("Y Amplitude")
+    
+    plt.subplot(313)
+    plt.plot(data_array_from_file[:,0], data_array_from_file[:,3])
+    plt.ylabel("Z Amplitude")
+    plt.xlabel("Time Sampled")
+    
+    
+    plt.show()
+
+    plot_z(data_array_from_file)
+    
+def remove_mean_offset(data_array):
+    s = data_array[:, 3]
+    mean_s = np.mean(s)
+    s = s - mean_s
+    
+    return s
+
+def plot_z(data_array):
+    plt.clf()
+    plt.plot(data_array[:,3])
+    plt.plot(remove_mean_offset(data_array))
+    plt.ylabel("Z Amplitude")
+    plt.xlabel("Time Sampled")
     plt.show()
 
 def setup_serial():

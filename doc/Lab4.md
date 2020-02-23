@@ -69,9 +69,31 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > **Q. Try your best to replicate the above plot by shaking your accelerometer. The above was sampled at 50Hz for 10 seconds. Make a gif of you running your program, shaking your accelerometer, and a plot showing up similar to the one above.**
 >
+> 
+>
 > **Q. What is approximately the frequency of oscillation of the x axis signal in the plot above?**
 >
-> ### Tutorial 3
+> ![Image](fig/Lab4/frequencyCalculation.png)
+>
+> The chart represents ten seconds of samples. If we tesselate the sequence of shakes across the entire sample space, we discover that we can tesselate up to five sequences over the entire interval. In other words, this means that over ten seconds, we could fit five sequences of shakes, so each sequence of shakes is 2 seconds long.
+>
+> From there, it's a simple frequency calculation.
+>
+> Frequency = Cycles / Seconds
+>
+> Frequency = 4 cycles / 2 seconds
+>
+> **Frequency = 2 Hz**
+>
+> ### Tutorial 4: Removing Mean Offset
+>
+> I did this task successfully! Orange is zeroed; I tapped the hardware about one time per second.
+>
+> ![Image](fig/Lab4/meanOffsetRemoved.png)
+>
+> ### Smoothing with Moving Average
+>
+>
 
 ## Challenge 1
 

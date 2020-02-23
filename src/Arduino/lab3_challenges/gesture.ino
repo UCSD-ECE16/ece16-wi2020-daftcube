@@ -34,14 +34,14 @@ void printADC(){ //print the ADC values
   //printSerial("Microseconds: ");
   printSerial(micros());
   printSerial(",");
-  //printSerial("Z:");
-  printSerial(accelZ_Val);
+  //printSerial("X:");
+  printSerial(accelX_Val);
   printSerial(",");
   //printSerial("Y:");
   printSerial(accelY_Val);
   printSerial(",");
-  //printSerial("X:");
-  printlnSerial(accelX_Val);  
+  //printSerial("Z:");
+  printlnSerial(accelZ_Val);  
   /*
   printSerial(",");
   printSerial("Z Upper Bound:");
