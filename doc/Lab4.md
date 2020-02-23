@@ -91,10 +91,37 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > ![Image](fig/Lab4/meanOffsetRemoved.png)
 >
-> ### Smoothing with Moving Average
+> ### Tutorial 5: Smoothing with Moving Average
+> 
+> **Q. Try different n_avg and document, with plots, the result for a few different n_avg and describe which n_avg worked well in emphasizing the taps?**
 >
+> I tried a few values, here are the highlights, where green is the plotted moving average...
 >
-
+> 5 Samples.
+>
+> ![Image](fig/Lab4/detrend5.png)
+>
+> I think 10 samples worked the best for the moving average. It hits a pretty good balance between having a running history, but not having that history be too long as to make it meaningless.
+>
+> ![Image](fig/Lab4/detrend10.png)
+>
+> 10 samples again, but with a high amount of motion. Still works pretty well...
+>
+> ![Image](fig/Lab4/detrend10HighMotion.png)
+>
+> A Bigger value doesn't always mean a better reduction; in fact, large values like 50 tended to provide ill results. This is because when the moving average goes back so far, slow changes have a much greater weight on the overall mean of the current value. For example, check out the plot for Detrend 20:
+>
+> ![Image](fig/Lab4/detrend20.png)
+>
+> ### Tutorial 6: Looking at the Signal in Differnt Ways
+>
+> **Q. Try using np.diff(s) to calculate the gradient of the signal s and plot the signal.**
+>
+> Here is the plot that shows the difference over time. It's the red line. As you can see, it's way more effective than the other methods for detecting taps vs. regular variation.
+>
+> ![Image](fig/Lab4/diff.png)
+> 
+> 
 ## Challenge 1
 
 ## Challenge 2

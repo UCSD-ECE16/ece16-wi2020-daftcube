@@ -102,13 +102,32 @@ def remove_mean_offset(data_array):
     
     return s
 
+def moving_average(s, n_avg):
+    ma = np.zeros(s.size)
+    for i in np.arange(0, len(s)):
+        ma[i] = np.mean( s[i:(i + n_avg)] )    
+    return ma
+
+def detrend(s, n_avg):
+    ma = moving_average(s, n_avg)
+    return s - ma
+
 def plot_z(data_array):
     plt.clf()
     plt.plot(data_array[:,3])
     plt.plot(remove_mean_offset(data_array))
+    plt.plot(detrend(data_array[:,3], 10))
+    plt.plot(signal_diff(data_array[:,3]))
     plt.ylabel("Z Amplitude")
     plt.xlabel("Time Sampled")
     plt.show()
+
+def signal_diff(s):
+    s_diff = np.diff(s)
+    s_diff = np.append(s_diff, 0) #np.diff returns one shorter, so need to add a 0
+    #remember to return s_diff
+    return s_diff
+
 
 def setup_serial():
     serial_name = 'COM7'
