@@ -1,3 +1,8 @@
+#include <heartRate.h>
+#include <MAX30105.h>
+#include <spo2_algorithm.h>
+
+
 #define CHALLENGE_1 false
 #define OTHER_CHALLENGES true
 #define FIREWORKS false
@@ -15,23 +20,25 @@ void setup()
   setupLed();
   setupOled();
   setupSerial();
+  setupHR();
 
   delay(2000);
 }
 
 void loop()
 {
-  Lab3();
+  Lab4();
 }
 
 /*
  * Lab 3 Challenges
  */
-void Lab3()
+void Lab4()
 {
   receiveMessage();
   sendData();
   checkMessage();
+  readHR();
 }
 
 // Contains logic for last lab.

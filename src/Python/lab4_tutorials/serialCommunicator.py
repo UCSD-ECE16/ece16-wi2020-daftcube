@@ -45,7 +45,7 @@ def receive_sample(ser):
 def receive_data(ser):
     global sample_count
     
-    while sample_count < 50*10:
+    while sample_count < 50*5:
         try:
             receive_sample(ser)
             
@@ -75,25 +75,29 @@ def plot():
     plt.clf()
     fig, axs = plt.subplots(3)
     
-    plt.subplot(311)
+    plt.subplot(411)
     plt.plot(data_array_from_file[:,0], data_array_from_file[:,1])    
     
     plt.title("Accelerometer Data")
     plt.ylabel("X Amplitude")
     
-    plt.subplot(312)
+    plt.subplot(412)
     plt.plot(data_array_from_file[:,0], data_array_from_file[:,2])
     plt.ylabel("Y Amplitude")
     
-    plt.subplot(313)
+    plt.subplot(413)
     plt.plot(data_array_from_file[:,0], data_array_from_file[:,3])
     plt.ylabel("Z Amplitude")
+    
+    plt.subplot(414)
+    plt.plot(data_array_from_file[:,0], -data_array_from_file[:,4])
+    plt.ylabel("Red")
     plt.xlabel("Time Sampled")
     
     
     plt.show()
 
-    plot_z(data_array_from_file)
+    # plot_z(data_array_from_file)
     
 def remove_mean_offset(data_array):
     s = data_array[:, 3]
@@ -130,7 +134,7 @@ def signal_diff(s):
 
 
 def setup_serial():
-    serial_name = 'COM7'
+    serial_name = 'COM5'
     ser = serial.Serial(serial_name, 115200)  # open serial port
     print(ser.name)         # check which ports was really used
     return ser

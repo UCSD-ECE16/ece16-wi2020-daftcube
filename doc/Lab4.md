@@ -35,6 +35,10 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > According to the datasheet, the units for pulse width are microseconds (µs). 
 > 
+> ![Image](fig/Lab4/pulseWidth.png)
+>
+> Essentially, the pulse width dictates the amount of time per second that the LED is in the ON state rather than in the OFF state. A higher pulse width value will toggle the LED for a longer period of time every second, increasing the number of potential photons that could hit the sensor and thus causing a more intense reading. Likewise, a smaller pulse width would emit fewer relative photons, reducing the intensity of the reading.
+>
 > **Q. How many bits are needed for an ADC range of 16384?**
 >
 > 2 to the power of 14 is 16384. Therefore, for an ADC range of 16384, we need to use a primitive with at least 14 bits wide. If we use less, we will encounter overflow issues.
@@ -113,7 +117,7 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > ![Image](fig/Lab4/detrend20.png)
 >
-> ### Tutorial 6: Looking at the Signal in Differnt Ways
+> ### Tutorial 6: Looking at the Signal in Different Ways
 >
 > **Q. Try using np.diff(s) to calculate the gradient of the signal s and plot the signal.**
 >
@@ -123,5 +127,38 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > 
 > 
 ## Challenge 1
+> 
+> 
+> **Q. Why do we plot the negative of the signal? This has to do with light absorption. We talked about it in class.**
+>
+> It has to do with how the sensor itself functions, combined with how we are using it to detect a heartbeat. This particle sensor is really just a light intensity sensor with some extra hardware for signal processing. The numerical output does not represent meaningful information in and of itself, but rather it represents the amount of light detected from the LED emitter.
+>
+> Because this is just a glorified light intensity sensor, we can detect all sorts of things that depend on light intensity at certain wavelengths. For example, this sensor is also capable of detecting smoke in a gaseous environment because the smoke reduces the intensity of the reflected emitted light compared to a clean environment.
+>
+> For our application, we are trying to detect a heartbeat through skin. As blood pumps through a body, it isn't cycled continuously. There are moments in the heartbeat where there is a higher amount of blood in the finger compared to the baseline. When there is more blood, more light is blocked. By inverting the signal, we make the points at which the light intensity is the lowest into the point at which the plotted value is the highest. This is ultimately more meaningful than the raw data.
+>
+>
+> **Q. Try different sampleAverage parameters and plot them. What is the effect of sampleAverage on the smoothness of the signal?**
+>
+>
+>
+> **Q. Try different ledBrightness. Is brighter always better? Why or why not?**
+>
+> Brighter is not always better; beyond a certain point, the brightness of the LED emitter becomes so intense that it overwhelms the light intensity sensor, reading a constant value of 2^18 - 1, or 262143. Because its so bright, we exceed the upper bound of the sensor and thus data is lost.
+>
+> **Deliverable: Tune the settings so that you ultimately get a sampling rate of 50Hz. What setting did you land on that gave you a clean signal and at the right sampling rate? Show a gif of you starting your code, and end with the plot appearing. Also include a still image of the plot.**
+>
+> Here are my settings, verbatim:
+>
+> ```c
+> byte ledBrightness = 37; //Options: 0=Off to 255=50mA
+> byte sampleAverage = 4; //Options: 1, 2, 4, 8, 16, 32
+> byte ledMode = 1; //Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
+> int sampleRate = 3200; // Without this, the sample rate is too slow for our refresh rate.
+> int pulseWidth = 411; //Options: 69, 118, 215, 411
+> int adcRange = 4096; //Options: 2048, 4096, 8192, 16384 (12 BITS)
+> ```
 
 ## Challenge 2
+
+## Challenge 3

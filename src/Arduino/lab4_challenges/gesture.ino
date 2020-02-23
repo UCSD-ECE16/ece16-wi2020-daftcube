@@ -41,7 +41,10 @@ void printADC(){ //print the ADC values
   printSerial(accelY_Val);
   printSerial(",");
   //printSerial("Z:");
-  printlnSerial(accelZ_Val);  
+  printSerial(accelZ_Val);
+  printSerial(","); 
+  //printSerial("Red: "); 
+  printlnSerial(getHR());
   /*
   printSerial(",");
   printSerial("Z Upper Bound:");
