@@ -140,9 +140,11 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > **Q. Try different sampleAverage parameters and plot them. What is the effect of sampleAverage on the smoothness of the signal?**
 >
->
+> A higher sample average smooths the signal output, but it smooths both the ambient reading and the peaks. If we increase our sample average by too much, the meaning is "flattened" out of our data. Likewise, if we decrease our sample average by too much, the peaks are clearly distinguishable but there exists an awful amount of noise.
 >
 > **Q. Try different ledBrightness. Is brighter always better? Why or why not?**
+>
+> 
 >
 > Brighter is not always better; beyond a certain point, the brightness of the LED emitter becomes so intense that it overwhelms the light intensity sensor, reading a constant value of 2^18 - 1, or 262143. Because its so bright, we exceed the upper bound of the sensor and thus data is lost.
 >
@@ -161,4 +163,18 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 
 ## Challenge 2
 
+> **Q. Note that it is very important to normalize AFTER you’ve done the filtering. Try normalizing before filtering and describe what happens and why it doesn’t work for helping with our threshold.**
+>
+> **Q. What threshold did you find to work well and how did you determine it?**
+>
+> **Q. Show a scatter plot of your heart rate calculation (y axis) vs the heart rate of the reference. Calculate the Root Mean Squared Error (RMSE) of your detected heart rate vs the reference heart rate. RMSE is calculated as the square root of the mean of the square of the difference between your estimated heart rate and the reference heart rate. More about RMSE can be found here: https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e.**
+
+
 ## Challenge 3
+
+> **Q. We made a few mistakes in the above code, identify them and fix them. :)**
+>
+> 
+>
+> **Q. Now add a new module in Libraries called HR.py for the heart rate and signal processing methods we made in this lab. And then in the Wearable.py, add the code to calculate heart rate and print out the heart rate. Show in a gif capturing the pulse for 10 seconds, plot and print out the calculated heart rate.** 
+>
