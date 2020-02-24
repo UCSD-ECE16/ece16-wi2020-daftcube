@@ -142,9 +142,23 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > A higher sample average smooths the signal output, but it smooths both the ambient reading and the peaks. If we increase our sample average by too much, the meaning is "flattened" out of our data. Likewise, if we decrease our sample average by too much, the peaks are clearly distinguishable but there exists an awful amount of noise.
 >
-> **Q. Try different ledBrightness. Is brighter always better? Why or why not?**
->
+> Sample Average 2
 > 
+> ![Image](fig/Lab4/avgSample2.png)
+>
+> Sample Average 4
+>
+> ![Image](fig/Lab4/avgSample4.png)
+>
+> Sample Average 8
+>
+> ![Image](fig/Lab4/avgSample8.png)
+>
+> Sample Average 16
+>
+> ![Image](fig/Lab4/avgSample16.png)
+> 
+> **Q. Try different ledBrightness. Is brighter always better? Why or why not?**
 >
 > Brighter is not always better; beyond a certain point, the brightness of the LED emitter becomes so intense that it overwhelms the light intensity sensor, reading a constant value of 2^18 - 1, or 262143. Because its so bright, we exceed the upper bound of the sensor and thus data is lost.
 >
@@ -160,12 +174,27 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > int pulseWidth = 411; //Options: 69, 118, 215, 411
 > int adcRange = 4096; //Options: 2048, 4096, 8192, 16384 (12 BITS)
 > ```
+>
+> Here's a gif of the device in action:
+>
+> ![Image](fig/Lab4/challenge1.gif)
+>
+> Here's the readout from the video:
+>
+> ![Image](fig/Lab4/challenge1Done.png)
+>
 
 ## Challenge 2
 
 > **Q. Note that it is very important to normalize AFTER you’ve done the filtering. Try normalizing before filtering and describe what happens and why it doesn’t work for helping with our threshold.**
 >
+> If we do not normalize before filtering, our unfiltered range will be normalized from zero to one. This means all of our filtering will be evaluated on a variable curve from zero to one. In addition to all of the precision issues this has, the various transformations and filtering operations compress the dataset down to a miniscule range that doesn't have any meaning. 
+>
+> The reason we normalize afterwards is to make all data universally fit between zero and one, no matter if the data has a moving average or different baseline. This allows us to use the same threshold for every set of observations. When normalizing before signal filtering, we don't get this property, and thus our universal baseline is meaningless except in a very narrow range of cases that tend to not exist in reality. 
+>
 > **Q. What threshold did you find to work well and how did you determine it?**
+>
+> .5 seemed to work great as a threshold. I came to this number mostly by running the sensor and tweaking my operation parameters to make the local extrema as close to one and zero as possible. With these tweaks, .5 is pretty safe because the height of the peaks ensures that only the meaningful changes are detected.
 >
 > **Q. Show a scatter plot of your heart rate calculation (y axis) vs the heart rate of the reference. Calculate the Root Mean Squared Error (RMSE) of your detected heart rate vs the reference heart rate. RMSE is calculated as the square root of the mean of the square of the difference between your estimated heart rate and the reference heart rate. More about RMSE can be found here: https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e.**
 

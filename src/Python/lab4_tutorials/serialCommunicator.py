@@ -45,7 +45,7 @@ def receive_sample(ser):
 def receive_data(ser):
     global sample_count
     
-    while sample_count < 50*5:
+    while sample_count < 50*10:
         try:
             receive_sample(ser)
             
@@ -61,7 +61,6 @@ def calc_sampling_rate():
     
     difference = np.diff(data_array, 1, 0)
     np.set_printoptions(precision=3)
-    print(difference)
     mean = np.mean(difference[:,0])
     return mean / 1000
 
@@ -99,8 +98,7 @@ def plot():
 
     # plot_z(data_array_from_file)
     
-def remove_mean_offset(data_array):
-    s = data_array[:, 3]
+def remove_mean_offset(s):
     mean_s = np.mean(s)
     s = s - mean_s
     
@@ -116,22 +114,79 @@ def detrend(s, n_avg):
     ma = moving_average(s, n_avg)
     return s - ma
 
-def plot_z(data_array):
-    plt.clf()
-    plt.plot(data_array[:,3])
-    plt.plot(remove_mean_offset(data_array))
-    plt.plot(detrend(data_array[:,3], 10))
-    plt.plot(signal_diff(data_array[:,3]))
-    plt.ylabel("Z Amplitude")
-    plt.xlabel("Time Sampled")
-    plt.show()
-
 def signal_diff(s):
     s_diff = np.diff(s)
     s_diff = np.append(s_diff, 0) #np.diff returns one shorter, so need to add a 0
     #remember to return s_diff
     return s_diff
 
+
+def calc_heart_rate_time(signal, fs):
+    global data_array
+    
+    # invert source
+    signal = -signal
+    
+    #filter the signal to remove baseline drifting
+    signal = detrend(signal, 16)
+    
+    #filter the signal to remove high frequency noise
+    signal = moving_average(signal, 8)
+    
+    # get standard deviation and remove all values exceeding 2 standard deviations from the mean.
+    #std_dev = np.std(signal) 
+    #signal = np.clip(signal, -std_dev * 1.75, std_dev * 1.75)
+
+    #Normalize the signal between 0 and 1
+    signal = normalize_signal(signal)
+    
+    #Explore using the signal directly or potentially using the diff of the signal. 
+    
+    plt.clf()
+    plt.plot(data_array[:,0], signal)
+    plt.show()
+    
+    #########################################################
+    
+    threshold = 0.5
+    goingUp = signal[0] < threshold
+    crossings = 0
+    
+    #Count the number of times the signal crosses a threshold.
+    for i in range(signal.size):
+        current_sample = signal[i]
+        
+        if goingUp and current_sample > threshold:
+            goingUp = False
+            crossings = crossings + 1
+        else:
+            if not goingUp and current_sample < threshold:
+                goingUp = True
+                crossings = crossings + 1
+    
+    # Calculate the beats per minute.
+    time_to_get_samples = (1/fs) * signal.size
+    print(time_to_get_samples)
+    
+    return ((crossings/2) * 60) / time_to_get_samples
+
+def normalize_signal(signal):
+    
+    #find min of signal
+    minimum = np.min(signal)
+    
+    #subtract the minimum so the minimum of the signal is zero
+    signal = signal - minimum
+    #find the new maximum of the signal
+    maximum = np.max(signal)
+    
+    #divide the signal by the new maximum so the maximum becomes 1
+    signal = signal / maximum
+    
+    return signal
+
+def linear_map(a1, a2, b1, b2, s):
+    return b1 + (((s - a1) * (b2 - b1))/(a2 - a1))
 
 def setup_serial():
     serial_name = 'COM5'
@@ -140,6 +195,8 @@ def setup_serial():
     return ser
 
 def main():
+    global data_array
+    
     ser = setup_serial()
     ser.write("start data\n".encode('utf-8'))
     receive_data(ser)
@@ -151,6 +208,7 @@ def main():
     print("The frequency was " + str(1/(sampRate/1000)))
 
     plot()
+    print(calc_heart_rate_time(data_array[:,4], 1/(sampRate/1000)))
 
 if __name__== "__main__":
     main()

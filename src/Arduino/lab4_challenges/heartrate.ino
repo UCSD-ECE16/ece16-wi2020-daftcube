@@ -4,7 +4,7 @@ MAX30105 particleSensor;
 int HR_Data;
 
 //Setup to sense a nice looking saw tooth on the plotter
-byte ledBrightness = 37; //Options: 0=Off to 255=50mA
+byte ledBrightness = 42; //Options: 0=Off to 255=50mA
 byte sampleAverage = 2; //Options: 1, 2, 4, 8, 16, 32
 byte ledMode = 1; //Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
 int sampleRate = 3200; //Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
