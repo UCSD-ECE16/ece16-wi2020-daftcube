@@ -11,6 +11,9 @@ class Connection:
         self.setup_connection()
         self.string_buffer = []
 
+    def get_data_field(self):
+        return self.data
+
     def setup_connection(self):
         self.ser = serial.Serial(self.serial_name, self.baud_rate)  # open serial port
     
@@ -20,7 +23,7 @@ class Connection:
         
     def send_serial(self, message):
         #write message to serial
-        self.ser.write(message.encode('utf-8') + "\n")
+        self.ser.write((message + "\n").encode('utf-8'))
 
     def read_serial(self):
         #read a byte at a time and print to console
@@ -29,7 +32,7 @@ class Connection:
     
     def start_streaming(self):
         # send 'Start Data\n' through serial
-        self.ser.write("start data\n")
+        self.ser.write("start data\n".encode('utf-8'))
     
     def receive_data(self):
         c = self.ser.read(1).decode('utf-8')         # read 1 byte
@@ -44,4 +47,4 @@ class Connection:
     
     def end_streaming(self):
         # send 'Stop Data\n' through serial
-        self.ser.write("stop data\n")
+        self.ser.write("stop data\n".encode('utf-8'))

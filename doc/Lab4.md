@@ -201,9 +201,19 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 
 ## Challenge 3
 
-> **Q. We made a few mistakes in the above code, identify them and fix them. :)**
+> **Q. We made a few ~~mistakes~~ _errors and poor design choices_ in the above code, identify them and fix them. :)**
 >
+> - Missing Dependencies: Forgot to include packages in the sample code for most classes. Forgot to include libraries in Wearable.
+> - Logic: In ```main()``` of ```Wearable```, there is no return value for ```self.collect_data()```, nor is the return value of ```self.collect_data()``` captured into a variable called ```data_array1```. 
+> - Logic (?): ```Connection``` is missing a member function ```
+> - Syntax: Missing mandatory ```self``` initial parameter for ```Data``` constructor and various other member functions.
+> - Protocol: The serial port should be closed immediately after receiving data as to prevent the serial port from being left open if the visualization or heart rate part of the program crashes.
+> - Style: -able generally denotes interfaces or abstract types; making a concrete object of type -able is confusing and represents poor naming conventions.
+> - Style: No header documentation, especially in a format that can be run through a documentation generator.
+> - Separation of Concerns: In the ```Data``` class, there is no getter for the class member field ```data_array```. By not having a getter, it is implied the only way to access the field is through a direct access, which is a big no-no and leads to lots of coupled code. I added one for good measure.
+> - Seperation of Concerns: The sample code has this all over the place. There is also no getter for ```Connection```'s ```Data``` member field.
 > 
+> ```The CS major is sad :(((```
 >
 > **Q. Now add a new module in Libraries called HR.py for the heart rate and signal processing methods we made in this lab. And then in the Wearable.py, add the code to calculate heart rate and print out the heart rate. Show in a gif capturing the pulse for 10 seconds, plot and print out the calculated heart rate.** 
 >
