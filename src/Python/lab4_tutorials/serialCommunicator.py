@@ -209,6 +209,18 @@ def main():
 
     plot()
     print(calc_heart_rate_time(data_array[:,4], 1/(sampRate/1000)))
+    
+            
+    files = ["01_77bpm.csv", "02_81bpm.csv", "03_74bpm.csv", "04_72bpm.csv", "05_78bpm.csv", "06_107bpm.csv", "07_91bpm.csv", "08_101bpm.csv", "09_102bpm.csv", "10_95bpm.csv"]
+    calc = np.zeros(10)
+    index = 0
+    for file in files:
+        datadata =  np.genfromtxt(file, delimiter=',')
+        calc[index] = calc_heart_rate_time(datadata[:,4], 45.62004590528547)
+        index = index + 1
+    
+    print(calc)
+        
 
 if __name__== "__main__":
     main()

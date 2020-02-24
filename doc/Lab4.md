@@ -197,7 +197,12 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > .5 seemed to work great as a threshold. I came to this number mostly by running the sensor and tweaking my operation parameters to make the local extrema as close to one and zero as possible. With these tweaks, .5 is pretty safe because the height of the peaks ensures that only the meaningful changes are detected.
 >
 > **Q. Show a scatter plot of your heart rate calculation (y axis) vs the heart rate of the reference. Calculate the Root Mean Squared Error (RMSE) of your detected heart rate vs the reference heart rate. RMSE is calculated as the square root of the mean of the square of the difference between your estimated heart rate and the reference heart rate. More about RMSE can be found here: https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e.**
-
+>
+> ![Image](fig/Lab4/rmse.png)
+>
+> **We had an RMSE Value of 5.491**
+>
+> Excel file can be found in data/Lab4.
 
 ## Challenge 3
 
@@ -217,3 +222,6 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > **Q. Now add a new module in Libraries called HR.py for the heart rate and signal processing methods we made in this lab. And then in the Wearable.py, add the code to calculate heart rate and print out the heart rate. Show in a gif capturing the pulse for 10 seconds, plot and print out the calculated heart rate.** 
 >
+> ![Image](fig/Lab4/challenge2.gif)
+>
+> Object-oriented code can be found in src/Python/Libraries
