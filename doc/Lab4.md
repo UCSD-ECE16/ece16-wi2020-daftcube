@@ -28,7 +28,7 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > byte sampleAverage = 8; //Options: 1, 2, 4,  8, 16, 32
 > byte ledMode = 2; //Options: 1 = Red only,  2 = Red + IR, 3 = Red + IR + Green
 > int sampleRate = 200; //Options: 50, 100,  200, 400, 800, 1000, 1600, 3200
-> int pulseWidth = 411; //Options: 69, 118,  215, 411
+> int pulseWidth = 69; //Options: 69, 118,  215, 411
 > int adcRange = 8192; //Options: 2048, 4096,  8192, 16384
 > ```
 > **Q. What are the units of the pulse width? Would the bigger the pulseWidth result in a more intense or less intense measurement? Why?**
