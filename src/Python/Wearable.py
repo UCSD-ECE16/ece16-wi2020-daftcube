@@ -53,11 +53,13 @@ class Wearable:
         # Process
         data_array1 = self.HR.calc_heart_rate_time(data_array1, sampling_rate)
         
+        print(sampling_rate)
+        
         Visualize.plotData(data_array)
         
 
 def main():
-    wearable = Wearable("COM5", 115200)
+    wearable = Wearable("COM5", 230400)
     wearable.main()
 
 if __name__== "__main__":

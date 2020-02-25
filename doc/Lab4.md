@@ -167,11 +167,11 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > Here are my settings, verbatim:
 >
 > ```c
-> byte ledBrightness = 37; //Options: 0=Off to 255=50mA
-> byte sampleAverage = 4; //Options: 1, 2, 4, 8, 16, 32
+> byte ledBrightness = 42; //Options: 0=Off to 255=50mA
+> byte sampleAverage = 2; //Options: 1, 2, 4, 8, 16, 32
 > byte ledMode = 1; //Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
-> int sampleRate = 3200; // Without this, the sample rate is too slow for our refresh rate.
-> int pulseWidth = 411; //Options: 69, 118, 215, 411
+> int sampleRate = 3200; //Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
+> int pulseWidth = 118; //Options: 69, 118, 215, 411
 > int adcRange = 4096; //Options: 2048, 4096, 8192, 16384 (12 BITS)
 > ```
 >
@@ -210,7 +210,6 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 >
 > - Missing Dependencies: Forgot to include packages in the sample code for most classes. Forgot to include libraries in Wearable.
 > - Logic: In ```main()``` of ```Wearable```, there is no return value for ```self.collect_data()```, nor is the return value of ```self.collect_data()``` captured into a variable called ```data_array1```. 
-> - Logic (?): ```Connection``` is missing a member function ```
 > - Syntax: Missing mandatory ```self``` initial parameter for ```Data``` constructor and various other member functions.
 > - Protocol: The serial port should be closed immediately after receiving data as to prevent the serial port from being left open if the visualization or heart rate part of the program crashes.
 > - Style: -able generally denotes interfaces or abstract types; making a concrete object of type -able is confusing and represents poor naming conventions.
