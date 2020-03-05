@@ -62,7 +62,7 @@ def calc_sampling_rate():
     difference = np.diff(data_array, 1, 0)
     np.set_printoptions(precision=3)
     mean = np.mean(difference[:,0])
-    return mean / 1000
+    return 1000000 / mean
 
 def plot():
     global data_array
@@ -189,8 +189,8 @@ def linear_map(a1, a2, b1, b2, s):
     return b1 + (((s - a1) * (b2 - b1))/(a2 - a1))
 
 def setup_serial():
-    serial_name = 'COM5'
-    ser = serial.Serial(serial_name, 115200)  # open serial port
+    serial_name = 'COM4'
+    ser = serial.Serial(serial_name, 230400)  # open serial port
     print(ser.name)         # check which ports was really used
     return ser
 
@@ -198,14 +198,14 @@ def main():
     global data_array
     
     ser = setup_serial()
+    ser.write("stop data\n".encode('utf-8'))
     ser.write("start data\n".encode('utf-8'))
     receive_data(ser)
     ser.write("stop data\n".encode('utf-8'))
     ser.close()
     
     sampRate = calc_sampling_rate()
-    print("The latency was " + str(sampRate))
-    print("The frequency was " + str(1/(sampRate/1000)))
+    print("The freq was " + str(1/sampRate))
 
     plot()
     print(calc_heart_rate_time(data_array[:,4], 1/(sampRate/1000)))

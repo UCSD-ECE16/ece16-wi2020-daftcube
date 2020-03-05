@@ -32,14 +32,9 @@ class Wearable:
 
     def main(self):
         
-        SAMPLES_TO_COLLECT = 500
-
-        data_array = self.collect_data(SAMPLES_TO_COLLECT) #number of samples to collect
-        
-        self.connection.close_connection()
         
         # calculate sampling rate
-        sampling_rate = self.connection.data.calc_sampling_frequency()
+        """sampling_rate = self.connection.data.calc_sampling_frequency()
         
         # save data 
         self.HR.save_to_file(data_array)
@@ -56,10 +51,24 @@ class Wearable:
         print(sampling_rate)
         
         Visualize.plotData(data_array)
+        """
         
+        while True:
+            print("Please enter a command: ")
+            command = input()
+            if command == "READ":        
+                SAMPLES_TO_COLLECT = 200
+                data_array = self.collect_data(SAMPLES_TO_COLLECT) #number of samples to collect
+                
+                print("The frequency is " + str(self.connection.data.calc_sampling_frequency()))
+                
+            if command == "CLOSE":
+                print("Goodbye!")
+                self.connection.close_connection()
+                break
 
 def main():
-    wearable = Wearable("COM5", 230400)
+    wearable = Wearable("COM4", 230400)
     wearable.main()
 
 if __name__== "__main__":
