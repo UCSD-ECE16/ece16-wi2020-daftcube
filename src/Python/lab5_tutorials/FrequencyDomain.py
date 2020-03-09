@@ -27,7 +27,7 @@ s = data_array[:, 1] #get the x-acceleration array
 
 Pxx, Freqs = plt.psd(s, NFFT=len(t), Fs=fs)
 
-index_of_largest_freq = np.argmax(Pxx[2:])
+index_of_largest_freq = np.argmax(Pxx[1:])
 
 largest_freq = Freqs[index_of_largest_freq]
 print(index_of_largest_freq)

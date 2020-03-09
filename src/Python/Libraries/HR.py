@@ -24,6 +24,10 @@ class HR:
         #remember to return s_diff
         return s_diff
 
+    def calc_heart_rate_freq(signal, fs):
+        #Take the PSD of the signal
+        #Calculate HR based on find peak
+        pass
 
     def calc_heart_rate_time(self, signal, fs):
 

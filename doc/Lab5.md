@@ -154,12 +154,89 @@ Prepared By: Owen Bartolf | 2/25/2020
 > | Z Axis | 2.0 Hz |
 >
 
-## Pre-Challenge Disclaimer:
-> **Because all of my finals are either this weekend or early next week, I thought it neccessary to save some time. To save time, I'm just going to write all of my challenges as objects so I don't have to transform all of my libraries to objects at the end.**
->
-> **Thanks for understanding!**
-
 ## Challenge 1
+> **Low-Pass Filter Creation and Plot**
+>
+> Before we do anything, we must first calculate the cutoff. This is because the function requires the cutoff to be a number between 0 and 1 where 1 is the Nyquist frequency.
+>
+> We sample at 50 Hz. So, finding our cutoff is a simple proportion...
+>
+> 5 Hz / 50 Hz = x / 1
+>
+> .1 is the cutoff.
+>
+> Now, we can plot. Code can be found in Lab5_Challenges...
+>
+> ![Image](fig/Lab5/Challenge1Plot.png)
+>
+> **Q. Looking at the documentation for signal.butter, how would you make a high pass filter with a cut off of 0.8Hz? Of the previous time based filters in Lab 4, which filter is most like the high pass filter?**
 > 
+> The documentation says we can change the btype parameter to 'high' to create a highpass filter. If we want a cutoff of .8 Hz, we just do the same process outlined above...
+>
+> .8 Hz / 50 Hz = x / 1
+>
+> The cutoff is 0.016...
+>
+> Which gives us our final code...
+> ```python
+> b,a = signal.butter(3, 0.016, btype='high')
+> s_filt = signal.lfilter(b,a,s)
+> ```
+>
+> If we compare the plot we get from that code...
+>
+> ![Image](fig/Lab5/MostLikeLab4.png)
+>
+> ...to the filters we made in Lab 4, we can see that there is some **similarity between the high pass and the detrend filter.** Both center the data to 0, remove moving trends, and could have some trouble with a hanging initial extreme value.
+
+### Challenge 2: What if the Frequency Content of the PPG?
+
+>
+> Using the data you collected from Lab 4 of your own heart signal, plot the PSD for each. Describe the frequency properties of your PPG. Mark the dominant fundamental frequency for each plot. 
+> 
+> Your plot should be a 2 by 10 subplot plot where the first column shows the time domain signal of the PPG and the second column shows the associated PSD. You MUST label the axis with the appropriate labels. For example the time should be in SECONDS (with the start of the plot being 0 seconds) and the PSD should be in HZ. 
+>
+> ** Chart Deliverable (Axes kind of got compressed)**
+>
+> ![Image](fig/Lab5/BigGraph.png)
+>
+> Additionally, the dominant frequencies are as follows...
+> 
+> | Heartrate (BPM) | Dominant Frequency (Hz) |
+> |-----------------|-------------------------|
+> | 72              | 1.3216                  |
+> | 74              | 1.3216                  |
+> | 77              | 2.7376                  |
+> | 78              | 1.2272                  |
+> | 81              | 3.4928                  |
+> | 91              | 3.1001                  |
+> | 95              | 3.2096                  |
+> | 101             | 3.4928                  |
+> | 102             | 3.2096                  |
+> | 107             | 3.8704                  |
+>
+> **Q. How does the dominant frequency change with regards to the heart rate?**
+>
+> As our heart rate increases, the dominant frequency _generally_ increases compared to lower heart rate measurements. However, this isn't always the case (91 BPM) and this might be because of how we filter the data.
+>
+> **Q. If the heart rate is 65BPM, what is approximately the fundamental frequency? What about the second and third harmonic? Why is it that even though the heart rate is 65BPM, there are higher frequency content than just the fundamental frequency? What does this imply about how you should be setting your sampling rate if you expect a heart rate maximum of 180BPM?**
+> 
+> ???
+> 
+
+### Challenge 3: Calculate Heart Rate with Frequency Domain Features
+
+>
+>
+>
+
+### Challenge 4: Data for ML
+
+>
+>
+>
+
+### Challenge 5: Gaussian Mixture Model for Heart Rate
+
 
 [Return to Table of Contents](TableOfContents.md)
