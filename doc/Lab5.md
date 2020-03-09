@@ -225,9 +225,36 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > ![Image](fig/Lab5/CalcHeartRateFreq65.png)
 > 
-> The fundamental frequency of a heart beating at 65 bpm is .92 Hz.
+> The fundamental frequency of a heart beating at 65 bpm is 1.08 Hz.
+>
+> Harmonics are just positive integer multiples of the fundamental frequency. This means our second and third harmonics will be 1.08 × 2 = 2.16 Hz and 1.08 × 3 = 3.24 Hz respectively.
 >
 > Through the Sampling theorem, this implies if we have a heart rate of 180 BPM, we should sample at double the frequency.
+>
+> To answer the "why" part of the question, I'm not too sure, but I have speculation based on the behavior of standing waves on strings. On a string with fixed end points, waves that meet the endpoints will reflect, causing the waves to overlap with themselves. This is what creates harmonic behavior of strings. 
+> 
+> I speculate that blood cycles through the body, creating a medium where the 'endpoints' are at either ends of the valves of the heart. When the heart conducts a single pumping cycle, it can only move a certain volume of blood before closing. When closed, the blood still has inertia, so when it collides with the closed valve, some of that energy might reflect, creating low-amplitude waves of harmonic frequencies.
+>
+> If we wish to detect these harmonics, we need to be sampling at a theoretical rate that exceeds twice the maximum frequency of the largest harmonic wave we want to detect. In practice, we want about four times that.
+>
+> If we wanted to detect the fundamental frequency and up to the third harmonic of a heart rate of 180 BPM, we would first calculate the fundamental frequency...
+>
+> ![Image](fig/Lab5/CalcHeartRateFreq180.png)
+>
+> ...and we get 6 Hz.
+>
+> Now that we have the fundamental frequency, we can calculate the second and third harmonic as positive integer multiples. 6 × 2 = 12 Hz for the second harmonic and 6 × 3 = 18 Hz for the third harmonic. **So, 18 Hz is the frequency of the largest wave we want to detect.**
+> 
+> According to the Nyquist Sampling Theorem, we need to sample at a frequency at least twice of the observed frequency.
+>
+> 18 * 2 = 36 Hz
+>
+> However, in practice, we should sample at least four times as fast.
+> 
+> 18 * 4 = 72 Hz
+>
+> So, while we might theoretically be able to construct an accurate representation of the wave at 50 Hz, best practice suggests that our representation of the 18 Hz wave might not be 100% reflective of the wave all of the time. We must tread carefully when filtering and doing operations with signals at this frequency.
+>
 >
 
 ### Challenge 3: Calculate Heart Rate with Frequency Domain Features
