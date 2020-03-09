@@ -2,6 +2,8 @@
 Prepared By: Owen Bartolf
 Date: 1/30/2020
 
+[Return to Table of Contents](TableOfContents.md)
+
 ## Tutorial 1: Python
 >
 > **Q. Show the code - Starting with a = “Hello World!!!”, come up with a code that will give us b = “Hello” and c = “World” and d = “!!!” . Also, in code, check if “ello” is in a.**
@@ -442,3 +444,5 @@ Date: 1/30/2020
 > Serial over bluetooth works!
 > ![Image](fig/Lab3/challenge4Works.gif)
 > ![Image](fig/Lab3/challenge3Demo3.gif)
+
+[Return to Table of Contents](TableOfContents.md)

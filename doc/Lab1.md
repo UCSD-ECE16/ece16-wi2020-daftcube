@@ -3,6 +3,8 @@ Prepared by: Owen Bartolf
 
 Date: 01/08/2020 (Happy Birthday to Me)
 
+[Return to Table of Contents](TableOfContents.md)
+
 ## Tutorials
 ### Tutorial 1:
 
@@ -213,3 +215,5 @@ Date: 01/08/2020 (Happy Birthday to Me)
 > - **Counting Down**: Increments an internal timer by one millisecond. If the timer exceeds 200 milliseconds, the removeTimer() function is called, which decrements the global timer by one and sends a message through the serial port. If the global timer is equal to zero, we reset the internal timer and transition back to the start state.
 > 
 > The finite state machine provides a really good means of organizing program logic, and it allows an easy way to implement a state-dependent, yielding program such as this timer.
+>
+[Return to Table of Contents](TableOfContents.md)

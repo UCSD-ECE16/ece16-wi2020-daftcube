@@ -1,6 +1,8 @@
 # ECE 16 Lab Report 4
 Prepared By: Owen Bartolf | Date: 2/13/2020
 
+[Return to Table of Contents](TableOfContents.md)
+
 ## Tutorial
 > ### MAX30105 Pulse Sensor
 >
@@ -224,3 +226,5 @@ Prepared By: Owen Bartolf | Date: 2/13/2020
 > ![Image](fig/Lab4/challenge2.gif)
 >
 > Object-oriented code can be found in src/Python/Libraries
+
+[Return to Table of Contents](TableOfContents.md)

@@ -1,7 +1,10 @@
+
 # ECE16 Lab Report 2
 Prepared by: Owen Bartolf
 
 Date: 01/16/2020
+
+[Return to Table of Contents](TableOfContents.md)
 
 ## Tutorial 1: Accelerometers
 
@@ -277,3 +280,5 @@ Date: 01/16/2020
 > ## **Q. But why...?**
 > 
 > WHY NOT...?
+
+[Return to Table of Contents](TableOfContents.md)

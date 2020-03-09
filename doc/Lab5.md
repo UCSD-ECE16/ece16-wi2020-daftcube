@@ -1,6 +1,8 @@
 # ECE Lab 5
 Prepared By: Owen Bartolf | 2/25/2020
 
+[Return to Table of Contents](TableOfContents.md)
+
 ## Tutorial
 > ### Correlation and Bland-Altman Plot
 >
@@ -159,3 +161,5 @@ Prepared By: Owen Bartolf | 2/25/2020
 
 ## Challenge 1
 > 
+
+[Return to Table of Contents](TableOfContents.md)
