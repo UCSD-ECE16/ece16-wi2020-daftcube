@@ -9,10 +9,10 @@ import numpy as np
 from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 
-#gnd = np.array([77, 81, 74, 72, 78, 107, 91, 101, 102, 95]) #reference heart rate
-#est = np.array([82.116, 71.167, 76.642, 73.904, 71.167, 99.873, 93.065, 98.539, 95.802, 90.328]) #estimate of your algorithm
-est = np.array([-10, 102, 50, 220, 1, 78, 22, 54, 109, 200])
-gnd = np.array([70, 72, 80, 83, 85, 90, 108, 101, 95, 91])
+gnd = np.array([77, 81, 74, 72, 78, 107, 91, 101, 102, 95]) #reference heart rate
+est = np.array([82.116, 71.167, 76.642, 73.904, 71.167, 99.873, 93.065, 98.539, 95.802, 90.328]) #estimate of your algorithm
+#est = np.array([-10, 102, 50, 220, 1, 78, 22, 54, 109, 200])
+#gnd = np.array([70, 72, 80, 83, 85, 90, 108, 101, 95, 91])
 
 [R,p] = pearsonr(gnd,est)
 

@@ -27,13 +27,33 @@ class HR:
         return s_diff
 
     def calc_heart_rate_freq(self, signal, fs):
+
+        # signal = self.detrend(signal, 8)
+        b,a = sig.butter(3, .05, btype='low') # currently high pass
+        
+        # Remove DC Baseline
+        signal = self.detrend(signal, 4)
+        
+        # Filter low values
+        signal = sig.lfilter(b,a,signal)
+        
+        
+        # signal = self.detrend(signal, 4)
+        
         #Take the PSD of the signal
         #Calculate HR based on find peak
         Pxx, Freqs = plt.psd(signal, NFFT=len(signal), Fs=fs)
-        peaks = sig.find_peaks(Freqs)
-        time_to_get_samples = (1/fs) * signal.size
+    
+        plt.show()
         
-        heart_freq = len(peaks) / time_to_get_samples
+        # Filter the Pxx
+        # Pxx = sig.lfilter(b,a,Pxx)
+        
+        slice_from = 3
+        
+        peaks, _ = sig.find_peaks(Pxx[slice_from:], distance=20)
+        
+        heart_freq = Freqs[slice_from:][peaks[0]]
         
         return heart_freq * 60
 

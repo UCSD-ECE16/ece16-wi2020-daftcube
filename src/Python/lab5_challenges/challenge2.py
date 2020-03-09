@@ -23,6 +23,7 @@ def detrend(s, n_avg):
     ma = moving_average(s, n_avg)
     return s - ma
 
+
 files = os.listdir("C:\\_Repositories\\ece16-wi2020-daftcube\\src\\Python\\lab5_challenges\\personal_heartrate_data")
 
 # Grid initialization

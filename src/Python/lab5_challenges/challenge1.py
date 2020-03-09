@@ -36,6 +36,8 @@ def normalize_signal(signal):
         
     return signal
 
+
+
 #b, a = signal.butter(filter_order, filter_cutoff, btype='low')
 #s_filt = signal.lfilter(b,a,s)
 

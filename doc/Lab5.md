@@ -187,7 +187,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > ![Image](fig/Lab5/MostLikeLab4.png)
 >
-> ...to the filters we made in Lab 4, we can see that there is some **similarity between the high pass and the detrend filter.** Both center the data to 0, remove moving trends, and could have some trouble with a hanging initial extreme value.
+> ...to the filters we made in Lab 4, we can see that there is some **similarity between the high pass and the moving average filter.** Both center the data to 0, remove moving trends, dull high peaks, and could have some trouble with a hanging initial extreme value.
 
 ### Challenge 2: What if the Frequency Content of the PPG?
 
@@ -247,11 +247,11 @@ Prepared By: Owen Bartolf | 2/25/2020
 > 
 > According to the Nyquist Sampling Theorem, we need to sample at a frequency at least twice of the observed frequency.
 >
-> 18 * 2 = 36 Hz
+> 18 * 2 = 36 Hz < 50 Hz
 >
 > However, in practice, we should sample at least four times as fast.
 > 
-> 18 * 4 = 72 Hz
+> 18 * 4 = 72 Hz > 50 Hz
 >
 > So, while we might theoretically be able to construct an accurate representation of the wave at 50 Hz, best practice suggests that our representation of the 18 Hz wave might not be 100% reflective of the wave all of the time. We must tread carefully when filtering and doing operations with signals at this frequency.
 >
@@ -260,7 +260,10 @@ Prepared By: Owen Bartolf | 2/25/2020
 ### Challenge 3: Calculate Heart Rate with Frequency Domain Features
 
 >
+> **Q. What are some failure modes of your frequency domain solution?**
 >
+> **Q. Compare and contrast the two different algorithms. Which has a lower error? Which has a bias closer to 0? Do you see any signs of mean tracking in either algorithm? Use the correlation and difference plots to support your argument.**
+> ![Image](fig/Lab5/NewVsOld.png)
 >
 
 ### Challenge 4: Data for ML
