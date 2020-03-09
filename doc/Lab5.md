@@ -219,10 +219,16 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > As our heart rate increases, the dominant frequency _generally_ increases compared to lower heart rate measurements. However, this isn't always the case (91 BPM) and this might be because of how we filter the data.
 >
-> **Q. If the heart rate is 65BPM, what is approximately the fundamental frequency? What about the second and third harmonic? Why is it that even though the heart rate is 65BPM, there are higher frequency content than just the fundamental frequency? What does this imply about how you should be setting your sampling rate if you expect a heart rate maximum of 180BPM?**
+> **Q. If the heart rate is 65BPM, what is approximately the fundamental frequency? What about the second and third harmonic? Why is it that even though the heart rate is 65BPM, there ~~are~~ _is_ higher frequency content than just the fundamental frequency? What does this imply about how you should be setting your sampling rate if you expect a heart rate maximum of 180BPM?**
 > 
-> ???
+> From 65 Beats per Minute, we can calculate the fundamental frequency through simple unit conversions...
+>
+> ![Image](fig/Lab5/CalcHeartRateFreq65.png)
 > 
+> The fundamental frequency of a heart beating at 65 bpm is .92 Hz.
+>
+> Through the Sampling theorem, this implies if we have a heart rate of 180 BPM, we should sample at double the frequency.
+>
 
 ### Challenge 3: Calculate Heart Rate with Frequency Domain Features
 
@@ -233,10 +239,29 @@ Prepared By: Owen Bartolf | 2/25/2020
 ### Challenge 4: Data for ML
 
 >
+> **Q. According to the lecture, what is the recommended split between training and testing on a small dataset?** 
 >
+> According to the lecture, our data should be split into the following categories...
 >
+> | Test Group   | Portion of Data |
+> |--------------|-----------------|
+> | Training Set | 70 %            |
+> | Validate Set | 15 %            |
+> | Testing Set  | 10 %            |
+>
+> **Q. Why is it important to split on subjects and not to treat each file as an independent sample?**
+>
+> Each person represents a certain type of human (or model) that we are trying to evaluate. We want our model to be able to transcend differences in 
 
 ### Challenge 5: Gaussian Mixture Model for Heart Rate
-
+>
+>
+> **Q. What is the difference between leave-one-out validation and leave-one-subject-out validation? Which are we doing and why is this important, and why would it be an issue if we used the other validation method given what we are building?**
+>
+>
+>
+> We are using leave-one-subject-out.
+>
+### Challenge 6: OOP Implementation
 
 [Return to Table of Contents](TableOfContents.md)
