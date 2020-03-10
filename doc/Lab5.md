@@ -247,11 +247,11 @@ Prepared By: Owen Bartolf | 2/25/2020
 > 
 > According to the Nyquist Sampling Theorem, we need to sample at a frequency at least twice of the observed frequency.
 >
-> 18 * 2 = 36 Hz < 50 Hz
+> **18 * 2 = 36 Hz < 50 Hz**
 >
 > However, in practice, we should sample at least four times as fast.
 > 
-> 18 * 4 = 72 Hz > 50 Hz
+> **18 * 4 = 72 Hz > 50 Hz**
 >
 > So, while we might theoretically be able to construct an accurate representation of the wave at 50 Hz, best practice suggests that our representation of the 18 Hz wave might not be 100% reflective of the wave all of the time. We must tread carefully when filtering and doing operations with signals at this frequency.
 >
@@ -262,9 +262,23 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > **Q. What are some failure modes of your frequency domain solution?**
 >
+> - **Incomplete Reading**: This issue is universal to our current methods of detecting a heartbeat. We assume that the sensor has a completely continuous reading of the data. If the subject removes his/her hand from the scanner, our algorithm does not know how to handle incomplete or discontinuous readings.
+> - **Inconsistent Reading**:
+> - **Inconsistent Frequency**:
+> - **Reading where Low Frequency Supercedes High Frequency Even Though High Frequency is More Reflective**:
+>
 > **Q. Compare and contrast the two different algorithms. Which has a lower error? Which has a bias closer to 0? Do you see any signs of mean tracking in either algorithm? Use the correlation and difference plots to support your argument.**
 > ![Image](fig/Lab5/NewVsOld.png)
 >
+> I do love me some tabulation.
+>
+> | Analyzing   | Metric Used                    | TIME Algorithm             | FREQ Algorithm             | Commentary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+> |-------------|--------------------------------|----------------------------|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | ACCURACY    | Root Mean  Squared Error       | 18.338                     | 26.027                     | TIME is more accurate than FREQ by almost a factor of 2.  In general, it seems that if the FREQ algorithm gets it wrong, it gets it _really_ wrong. This is because the frequency analysis finds the most prominent maximum that occurs first, so if there is a large amount of noise that was not filtered, the calculation cascades a lot of that error. Lastly, in the context of RMSE, both have a very high degree of error; this represents a usual error on the order of 10-20 BPM.                                                                                                                                                                                                                                   |
+> | PRECISION   | 95% Standard  Deviation Bounds | UPPER: 35.84 LOWER: -36.04 | UPPER: 51.79 LOWER: -50.19 | TIME is more precise than FREQ because the 95% limits of TIME are much more narrow than FREQ.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+> | BIAS        | Bias                           | -.1                        | .8                         | TIME has less bias than FREQ. FREQ tends to select values above the expected value whereas TIME tends to select slightly below the expected value. The second part makes some sense.  The TIME algorithm counts the amount of times peaks cross a finely-tuned normalized threshold, and if a peak lacks a amplitude large enough to exceed the threshold, it is not counted. Thus, the TIME algorithm tends to undershoot rather than overshoot. I don't know enough about the human heart to explain why we might get higher values than expected, but I do know that I could probably  reduce the extent to which the delinquent points skew the data if I  spent the same amount of time tuning FREQ as I did with TIME. |
+> | CORRELATION | R                              | .15                        | -.11                       | The TIME algorithm has a better correlation.  In fact, according to the R value, the FREQ  algorithm actually has a slight negative correlation. This is likely due to a single delinquent point in the dataset that both algorithms mark as an outlier.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+
 
 ### Challenge 4: Data for ML
 
@@ -289,6 +303,8 @@ Prepared By: Owen Bartolf | 2/25/2020
 > **Q. What is the difference between leave-one-out validation and leave-one-subject-out validation? Which are we doing and why is this important, and why would it be an issue if we used the other validation method given what we are building?**
 >
 >
+
+You can now import Markdown table code directly using File/Paste table data... dialog.
 >
 > We are using leave-one-subject-out.
 >

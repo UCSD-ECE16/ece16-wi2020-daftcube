@@ -34,7 +34,7 @@ for file in files:
     # Grab data
     t = data_array[:, 0]  # get the time array
     s = data_array[:, 4]  # get the heart rate array
-    fs = 47.2
+    fs = 50
     
     heart_rate_time = hr.calc_heart_rate_time(s, fs)
     heart_rate_freq = hr.calc_heart_rate_freq(s, fs)
@@ -65,6 +65,8 @@ std = np.std(dif) #get the standard deviation of the difference (using np.std)
 bias = np.mean(dif) #the mean value of the difference
 upper_std = bias + 1.96 * std #the bias plus 1.96 times the std
 lower_std = bias - 1.96 * std #the bias minus 1.96 times the std
+
+print("TIME BIAS: " + str(bias))
 
 plt.subplot(122)
 plt.scatter(avg, dif)
@@ -100,6 +102,8 @@ bias = np.mean(dif) #the mean value of the difference
 upper_std = bias + 1.96 * std #the bias plus 1.96 times the std
 lower_std = bias - 1.96 * std #the bias minus 1.96 times the std
 
+print("FREQ BIAS: " + str(bias))
+
 plt.subplot(122)
 plt.scatter(avg, dif)
 plt.plot([np.min(avg),np.max(avg)],[bias,bias])
@@ -111,3 +115,11 @@ plt.text(np.max(avg)+5,lower_std,"-1.96STD="+str(round(lower_std,2)))
 plt.ylabel("Difference of Est and Gnd (BPM)")
 plt.xlabel("Average of Est and Gnd (BPM)")
 plt.show()
+
+# RMSE Calculation
+
+rmse_time = np.sqrt( np.mean( ( gnd - est_time ) ** 2 ))
+rmse_freq = np.sqrt( np.mean( ( gnd - est_freq ) ** 2 ))
+
+print( "RMSE TIME: " + str(rmse_time) )
+print( "RMSE FREQ: " + str(rmse_freq) )
