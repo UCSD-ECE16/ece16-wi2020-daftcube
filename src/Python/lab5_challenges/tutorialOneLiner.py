@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar  9 22:12:26 2020
+Created on Mon Mar  9 23:40:48 2020
 
 @author: Owen Bartolf
 """
 
 import glob
-
-class ML:
-    def train_hr_model(self, directory):
-        pass
-    
-    def calc_hr(self, s, fs):
-        pass
-    
-    def test_hr_model(self, directory)
-
 
 directory = "ml_data/"
 

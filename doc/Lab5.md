@@ -389,6 +389,9 @@ Prepared By: Owen Bartolf | 2/25/2020
 > **Q. Why is it important to split on subjects and not to treat each file as an independent sample?**
 >
 > Each person represents a certain type of human (or model) that we are trying to evaluate. We want our model to be able to transcend differences in 
+>
+> **Deliverable: Code to read data from training files.**
+>
 
 ### Challenge 5: Gaussian Mixture Model for Heart Rate
 >
