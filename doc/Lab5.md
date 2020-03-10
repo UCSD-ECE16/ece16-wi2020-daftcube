@@ -196,7 +196,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 > 
 > Your plot should be a 2 by 10 subplot plot where the first column shows the time domain signal of the PPG and the second column shows the associated PSD. You MUST label the axis with the appropriate labels. For example the time should be in SECONDS (with the start of the plot being 0 seconds) and the PSD should be in HZ. 
 >
-> ** Chart Deliverable (Axes kind of got compressed)**
+> **Chart Deliverable (Axes kind of got compressed)**
 >
 > ![Image](fig/Lab5/BigGraph.png)
 >
@@ -223,7 +223,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 > 
 > From 65 Beats per Minute, we can calculate the fundamental frequency through simple unit conversions...
 >
-> ![Image](fig/Lab5/CalcHeartRateFreq65.png)
+> ![Image](fig/Lab5/CalcHeartrateFreq65.png)
 > 
 > The fundamental frequency of a heart beating at 65 bpm is 1.08 Hz.
 >
@@ -239,7 +239,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > If we wanted to detect the fundamental frequency and up to the third harmonic of a heart rate of 180 BPM, we would first calculate the fundamental frequency...
 >
-> ![Image](fig/Lab5/CalcHeartRateFreq180.png)
+> ![Image](fig/Lab5/CalcHeartrateFreq180.png)
 >
 > ...and we get 6 Hz.
 >
@@ -262,12 +262,12 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > **Q. What are some failure modes of your frequency domain solution?**
 >
-> - **Incomplete Reading**: This issue is universal to our current methods of detecting a heartbeat. We assume that the sensor has a completely continuous reading of the data. If the subject removes his/her hand from the scanner, our algorithm does not know how to handle incomplete or discontinuous readings.
-> - **Inconsistent Reading**:
-> - **Inconsistent Frequency**:
+> - **Incomplete Reading**: This issue is universal to our current methods of detecting a heartbeat. We assume that the sensor has a completely continuous reading of the data. If the subject removes his/her hand from the scanner, our algorithm does not know how to handle incomplete or discontinuous readings. We also don't provide an avenue of a graceful termination; it just gives an incorrect result.
+> - **Inconsistent Reading**: If the subject does not maintain a stable and light pressure on the sensor with their finger, our readings can have a moving average that is too wild to filter properly. While we can filter it, it introduces a lot of noise that can interfere with our algorithm's ability to extract meaning from the data.
 > - **Reading where Low Frequency Supercedes High Frequency Even Though High Frequency is More Reflective**:
 >
 > **Q. Compare and contrast the two different algorithms. Which has a lower error? Which has a bias closer to 0? Do you see any signs of mean tracking in either algorithm? Use the correlation and difference plots to support your argument.**
+>
 > ![Image](fig/Lab5/NewVsOld.png)
 >
 > I do love me some tabulation.
