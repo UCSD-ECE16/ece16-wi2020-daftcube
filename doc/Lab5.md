@@ -394,8 +394,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > **Deliverable: Code to read data from training files.**
 > This is the function I derived.
-
- # Trains the HR model using the dataset in the given directory.
+>
 >```python
 > def train_hr_model(self, directory):
 >     
@@ -439,7 +438,6 @@ Prepared By: Owen Bartolf | 2/25/2020
 >             list_ref = np.append(list_ref, heartrate_ref)
 > ```
 >
->
 > **Creative Documentation: Comparing the Debugger Variable View to the File Structure**
 >
 > Spyder has a debugger that watches the live values of all of the variables in the program. Using the debugger, we can put a breakpoint at the end of the execution of our data reading code to confirm that it indeed matches the values present in the file system.
@@ -463,10 +461,12 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > **Q. What is the difference between leave-one-out validation and leave-one-subject-out validation? Which are we doing and why is this important, and why would it be an issue if we used the other validation method given what we are building?**
 >
+> We are using leave-one-subject-out validation.
 >
->
-> We are using leave-one-subject-out.
+> It is important to use leave-one-subject-out validation in scenarios where each individual subject might have a certain bias or method of conducting a behavior. Our device's claim is that we can return the heartrate for _any_ person. If we didn't use leave-one-subject-out, we might have samples from a single subject that exists in both the validation set and the training set. Because our goal is to create a model that can generalize, it would be an issue to mix subjects because the model might find some way of detecting the heartrate that is more dependent on the specific conditions of a subject rather than a general solution.
 >
 ### Challenge 6: OOP Implementation
-
+>
+> I never not OOP'ed.
+>
 [Return to Table of Contents](TableOfContents.md)
