@@ -223,7 +223,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 > 
 > From 65 Beats per Minute, we can calculate the fundamental frequency through simple unit conversions...
 >
-> ![Image](fig/Lab5/CalcHeartrateFreq65.png)
+> ![Image](fig/Lab5/CalcHeartrateFreqA.png)
 > 
 > The fundamental frequency of a heart beating at 65 bpm is 1.08 Hz.
 >
@@ -239,7 +239,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > If we wanted to detect the fundamental frequency and up to the third harmonic of a heart rate of 180 BPM, we would first calculate the fundamental frequency...
 >
-> ![Image](fig/Lab5/CalcHeartrateFreq180.png)
+> ![Image](fig/Lab5/CalcHeartrateFreqB.png)
 >
 > ...and we get 6 Hz.
 >
