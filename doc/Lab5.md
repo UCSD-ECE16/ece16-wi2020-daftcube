@@ -283,9 +283,93 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > Beyond the flimsiness of FREQ, I attribute the success of TIME to a _revolutionary leap in AI computing technology that I made..._
 >
-> In artificial intelligence, we consider gradient descent a pretty good method of reducing error. But there is a more efficient method: undergraduate student descent. Using this cutting-edge method of error reduction, all you need is a debt-ridden undergraduate with six hours of nothing to do except tune values until the error is marginalized. Awesome! I should patent this really vague definition of a technology and license it out to companies for ludicrous sums of money. Hm... 
+> In artificial intelligence, we consider gradient descent a pretty good method of reducing error. But there is a more efficient method. Introducing: **undergraduate student descent!** Using this _cutting-edge method of automated error reduction_, all you need is a debt-ridden undergraduate with six hours of nothing to do except tune values until the error is marginalized. Awesome! I should patent this really vague definition of a technology and license it out to companies for ludicrous sums of money. Hm... 
 >
 > In all seriousness, I did only spend 30 minutes trying to tune FREQ until the weight of finals week came crushing down upon me. I think with the same amount of time, I could tune my method to get it a little better than its current performance.
+
+### Tutorial Part 2
+
+>
+> #### Preface
+> I was told to write about the issue with my Firebeetle and not being able to attain a sample rate of 50 Hz. This seemed like a good place to write about it.
+>
+> I tried playing with the settings for hours. I scoured the depths of StackOverflow and the Arduino.cc Forums for answers. I delved into documentation and tried replacing all of my custom code with stock tutorial code.
+>
+> My search was fruitless. I could not get the Firebeetle sampling at the rate I wanted. I peaked at around 47.2 Hz, with any changes to Arduino settings or Python code causing diminishing returns. 
+>
+> We speculate it might be an issue with the interactions between the Firebeetle compiler and the Windows operating system. People compiling on Mac OS had no issues with attaining the minimum sampling rate. I plan on testing this hypothesis later if I have additional time to work with.
+>
+> #### Collecting Data
+> ✔
+> #### Listing all files in a directory.
+> I accomplished this without use of a provided library, see challenge3.py.
+> 
+> **Q. What is the correct regex to get trial “0” for any subject given our naming convention “ID_Trial_HR.csv”.**
+> 
+> ```python
+> just_0 = glob.glob(directory + "/*_01_*.csv")
+> for file in just_0:
+>     print(file)
+> ```
+> #### Manipulating Filenames
+>
+> I did the one-liner!
+> 
+> ```python
+> # One liner, string comprehension.    
+> unique = list(set([file.split("\\")[1][0:2] for file in set(all_files)]))
+> 
+> # UNIT TEST
+> # TEST 1: NUMBERS
+> 
+> failed_test = False
+> 
+> print("TEST 1: NUMBERS IN LIST")
+> for i in range(1, 13):
+>     test_condition = "{:02d}".format(i)
+>     
+>     test_result = test_condition in unique
+>     print("Has " + str(test_condition) + "? " + str(test_result))
+>     if not(test_result):
+>         print("FAILED TEST " + str(i))
+>         failed_test = True
+>         break
+> 
+> # TEST 2: IS A LIST
+> 
+> print("TEST 2: IS LIST")
+> if type(unique) == list:
+>     print("Is List? True")
+> else:
+>     print("FAILED TEST: NOT A LIST")
+>     failed_test = True
+>     
+> if not(failed_test):
+>     print("All tests succeeded! 2 Points Please!")
+> ```
+> 
+> And the output is...
+> 
+> ```
+> TEST 1: NUMBERS IN LIST
+> Has 01? True
+> Has 02? True
+> Has 03? True
+> Has 04? True
+> Has 05? True
+> Has 06? True
+> Has 07? True
+> Has 08? True
+> Has 09? True
+> Has 10? True
+> Has 11? True
+> Has 12? True
+> TEST 2: IS LIST
+> Is List? True
+> All tests succeeded! 2 Points Please!
+> ```
+> 
+> There, I even tested it for you. My first college extra credit, awesome! And quite painless too.
 
 ### Challenge 4: Data for ML
 
