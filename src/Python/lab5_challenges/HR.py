@@ -26,6 +26,11 @@ class HR:
         #remember to return s_diff
         return s_diff
 
+    def low_pass(self, signal, wN):
+        # Filter low values
+        b,a = sig.butter(3, wN, btype='low')
+        return sig.lfilter(b,a,signal)
+
     def calc_heart_rate_freq(self, signal, fs):
 
         # signal = self.detrend(signal, 8)

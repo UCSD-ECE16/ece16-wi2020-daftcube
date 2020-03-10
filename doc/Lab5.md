@@ -235,6 +235,8 @@ Prepared By: Owen Bartolf | 2/25/2020
 > 
 > I speculate that blood cycles through the body, creating a medium where the 'endpoints' are at either ends of the valves of the heart. When the heart conducts a single pumping cycle, it can only move a certain volume of blood before closing. When closed, the blood still has inertia, so when it collides with the closed valve, some of that energy might reflect, creating low-amplitude waves of harmonic frequencies.
 >
+> No matter if my speculation is right or wrong, the fact that there will be multiple harmonic frequencies present as a consequence of real world conditions remains a constant.
+>
 > If we wish to detect these harmonics, we need to be sampling at a theoretical rate that exceeds twice the maximum frequency of the largest harmonic wave we want to detect. In practice, we want about four times that.
 >
 > If we wanted to detect the fundamental frequency and up to the third harmonic of a heart rate of 180 BPM, we would first calculate the fundamental frequency...
@@ -391,7 +393,70 @@ Prepared By: Owen Bartolf | 2/25/2020
 > Each person represents a certain type of human (or model) that we are trying to evaluate. We want our model to be able to transcend differences in 
 >
 > **Deliverable: Code to read data from training files.**
+> This is the function I derived.
+
+ # Trains the HR model using the dataset in the given directory.
+>```python
+> def train_hr_model(self, directory):
+>     
+>     # Fetch unique IDs in directory
+>     all_files = glob.glob(directory + "*.csv")
+>     unique_ids = list(set([file.split("\\")[2][0:2] for file in set(all_files)]))
+>     
+>     list_data = np.array([])
+>     list_sub = np.array([])
+>     list_ref = np.array([])
+>     
+>     # print(unique_ids)
+>     
+>     for sub_id in unique_ids:
+>             
+>         # For each unique ID, get all sub files.
+>         sub_files = glob.glob(directory + "\\" + sub_id + "_*_*.csv")
+>         
+>         for sub_file in sub_files:
+>             # Load and splice data
+>             data_array = np.genfromtxt(sub_file, delimiter=",")
+>             heartrate_data = data_array[:,4]
+>             
+>             # Filter Data
+>             heartrate_data = self.hr.detrend(heartrate_data, 4)
+>             heartrate_data = self.hr.low_pass(heartrate_data, .05)
+>             
+>             # Append to list_data. Slice off any additional values
+>             if list_data.size > 0:
+>                 list_data = np.vstack((list_data, heartrate_data[:500]))
+>             else:
+>                 list_data = heartrate_data
+>             
+>             # Append subject id to list_sub
+>             list_sub = np.append(list_sub, int(sub_id))
+>             
+>             # Extract reference heartrate from file, then add to list_ref.
+>             heartrate_ref_string = sub_file.split("_")
+>             heartrate_ref = int(heartrate_ref_string[len(heartrate_ref_string) - 1].split(".")[0])
+>             
+>             list_ref = np.append(list_ref, heartrate_ref)
+> ```
 >
+>
+> **Creative Documentation: Comparing the Debugger Variable View to the File Structure**
+>
+> Spyder has a debugger that watches the live values of all of the variables in the program. Using the debugger, we can put a breakpoint at the end of the execution of our data reading code to confirm that it indeed matches the values present in the file system.
+>
+> ![Image](fig/Lab5/ChallengeFourViewC.png)
+>
+> The above image displays the array of read values, the array of reference values, and the array of subject ids. As we can see by drawing a line between like indices, the arrays are all aligned by index correctly. If we look at the actual file represented by each entry, we can also confirm that we are reading from the folder of CSVs correctly.
+>
+> Just for good measure, I will deliver a few more views of the data.
+>
+> ![Image](fig/Lab5/ChallengeFourViewA.png)
+>
+> And, one more...
+>
+> ![Image](fig/Lab5/ChallengeFourViewB.png)
+>
+> Looks pretty functional to me! Let's keep going.
 
 ### Challenge 5: Gaussian Mixture Model for Heart Rate
 >
@@ -399,8 +464,6 @@ Prepared By: Owen Bartolf | 2/25/2020
 > **Q. What is the difference between leave-one-out validation and leave-one-subject-out validation? Which are we doing and why is this important, and why would it be an issue if we used the other validation method given what we are building?**
 >
 >
-
-You can now import Markdown table code directly using File/Paste table data... dialog.
 >
 > We are using leave-one-subject-out.
 >

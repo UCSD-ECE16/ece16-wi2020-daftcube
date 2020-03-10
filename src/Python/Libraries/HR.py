@@ -20,6 +20,10 @@ class HR:
         ma = self.moving_average(s, n_avg)
         return s - ma
 
+    def low_pass(self, signal, wn):
+        b,a = sig.butter(3, wn, btype='low') # currently high pass
+        return sig.lfilter(b,a,signal)
+
     def signal_diff(s):
         s_diff = np.diff(s)
         s_diff = np.append(s_diff, 0) #np.diff returns one shorter, so need to add a 0
