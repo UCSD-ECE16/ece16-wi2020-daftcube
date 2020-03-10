@@ -278,7 +278,14 @@ Prepared By: Owen Bartolf | 2/25/2020
 > | PRECISION   | 95% Standard  Deviation Bounds | UPPER: 35.84 LOWER: -36.04 | UPPER: 51.79 LOWER: -50.19 | TIME is more precise than FREQ because the 95% limits of TIME are much more narrow than FREQ.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 > | BIAS        | Bias                           | -.1                        | .8                         | TIME has less bias than FREQ. FREQ tends to select values above the expected value whereas TIME tends to select slightly below the expected value. The second part makes some sense.  The TIME algorithm counts the amount of times peaks cross a finely-tuned normalized threshold, and if a peak lacks a amplitude large enough to exceed the threshold, it is not counted. Thus, the TIME algorithm tends to undershoot rather than overshoot. I don't know enough about the human heart to explain why we might get higher values than expected, but I do know that I could probably  reduce the extent to which the delinquent points skew the data if I  spent the same amount of time tuning FREQ as I did with TIME. |
 > | CORRELATION | R                              | .15                        | -.11                       | The TIME algorithm has a better correlation.  In fact, according to the R value, the FREQ  algorithm actually has a slight negative correlation. This is likely due to a single delinquent point in the dataset that both algorithms mark as an outlier.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-
+>
+> In summary, TIME is much better than FREQ. I'd attribute this mainly to the "flimsiness" of FREQ. Because we take the first significant peak without any lesser peaks within a radius of 10 samples from it, a small error in which frequency is the highest can cascade throughout the entire calculation.
+>
+> Beyond the flimsiness of FREQ, I attribute the success of TIME to a _revolutionary leap in AI computing technology that I made..._
+>
+> In artificial intelligence, we consider gradient descent a pretty good method of reducing error. But there is a more efficient method: undergraduate student descent. Using this cutting-edge method of error reduction, all you need is a debt-ridden undergraduate with six hours of nothing to do except tune values until the error is marginalized. Awesome! I should patent this really vague definition of a technology and license it out to companies for ludicrous sums of money. Hm... 
+>
+> In all seriousness, I did only spend 30 minutes trying to tune FREQ until the weight of finals week came crushing down upon me. I think with the same amount of time, I could tune my method to get it a little better than its current performance.
 
 ### Challenge 4: Data for ML
 
@@ -292,6 +299,8 @@ Prepared By: Owen Bartolf | 2/25/2020
 > | Training Set | 70 %            |
 > | Validate Set | 15 %            |
 > | Testing Set  | 10 %            |
+>
+> Markdown tables are awesome!
 >
 > **Q. Why is it important to split on subjects and not to treat each file as an independent sample?**
 >
