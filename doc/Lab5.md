@@ -512,5 +512,15 @@ Prepared By: Owen Bartolf | 2/25/2020
 > In summary, our ML algorithm is **vastly superior** to our TIME algorithm. Our ML algorithm is _very good_ at calculating a precise heart rate when between 60-80 BPM, while a negative bias begins to show with higher values. This might be a consequence of our biased dataset. Overall, in most environments, ML is clearly the better option in terms of selecting an algorithm.
 >
 > Seeing the improvement was perhaps the most satisfying moment of this class to date. A perfect moment for the end of the class!
+>
+> #### Video Demo
+>
+> I thought "Hey, let's take this for a test drive!" So, I made the following gif. I didn't have a heartrate monitor on me so I couldn't test it against anything, but I learned from my numerous data collection trials that my average resting heart rate is around 73, so the number we get isn't totally out of the realm of possibility. Do note that the algorithm fails to detect the first few samples. Because the sample time is long, this isn't too catastrophic, but its likely that the detected heart rate undershoots my actual heart rate due to the missed samples.
+>
+> ![Image](fig/Lab5/final_demo.gif)
+>
+> Awesome! The last lab down! Onto the final challenge!
+>
+
 
 [Return to Table of Contents](TableOfContents.md)
