@@ -2,11 +2,13 @@ from Libraries.Data import Data
 from Libraries.HR import HR 
 from Libraries.Visualize import Visualize 
 from Libraries.Connection import Connection 
+from Libraries.ML import ML
 
 class Wearable:
     def __init__(self, serial_name, baud_rate):
         self.connection = Connection(serial_name, baud_rate)
         self.HR = HR()
+        self.ml = ML(self.HR)
 
     def collect_data(self, num_samples):
         #first make sure data sending is stopped by ending streaming
@@ -52,15 +54,25 @@ class Wearable:
         
         Visualize.plotData(data_array)
         """
+
+        # Train ML before execution
+
+        self.ml.load_hr_data("ml_data\\training\\")
+        self.ml.train_hr_model(self.ml.list_sub[0:10])
+        self.ml.test_hr_model("ml_data\\testing\\")
         
         while True:
             print("Please enter a command: ")
             command = input()
             if command == "READ":        
-                SAMPLES_TO_COLLECT = 200
+                SAMPLES_TO_COLLECT = 1000
+                
+                # RAW DATA
                 data_array = self.collect_data(SAMPLES_TO_COLLECT) #number of samples to collect
                 
-                print("The frequency is " + str(self.connection.data.calc_sampling_frequency()))
+                processed_array = self.ml.filter_ml_data(data_array[:,4])
+                
+                print("Your heart rate is... " + str(self.ml.calc_hr(processed_array, self.ml.TEST_FREQUENCY)))
                 
             if command == "CLOSE":
                 print("Goodbye!")
@@ -68,7 +80,7 @@ class Wearable:
                 break
 
 def main():
-    wearable = Wearable("COM4", 230400)
+    wearable = Wearable("COM5", 230400)
     wearable.main()
 
 if __name__== "__main__":

@@ -16,9 +16,9 @@ from HR import HR
 class ML:
     
     # Default constructor
-    def __init__(self):
+    def __init__(self, heartrate_instance):
         #self.hr = hr_instance
-        self.hr = HR()
+        self.hr = heartrate_instance
         
         # Constant: Test Freq
         self.TEST_FREQUENCY = 50 # 50 hz
@@ -102,6 +102,7 @@ class ML:
     # Returns the heart rate
     def calc_hr(self, s, fs):
         analyzed_data = self.gmm.predict(s.reshape(-1,1))
+        plt.plot(s)
         plt.plot(analyzed_data)
         plt.show()
         
@@ -215,16 +216,11 @@ class ML:
     
     # The filtering function for ML stuff
     def filter_ml_data(self, heartrate_data):
+        heartrate_data = -heartrate_data
         heartrate_data = self.hr.detrend(heartrate_data, 4)
         heartrate_data = self.hr.low_pass(heartrate_data, .065)
         heartrate_data = self.hr.normalize_signal(heartrate_data)
         return heartrate_data
-
-ml = ML()
-
-ml.load_hr_data("ml_data\\training\\")
-ml.train_hr_model(ml.list_sub[0:10])
-ml.test_hr_model("ml_data\\testing\\")
 
 
 """
