@@ -390,7 +390,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > **Q. Why is it important to split on subjects and not to treat each file as an independent sample?**
 >
-> Each person represents a certain type of human (or model) that we are trying to evaluate. We want our model to be able to transcend differences in 
+> Each person represents a certain type of human (or model) that we are trying to evaluate. We want our model to be able to transcend differences in subjects and detect any heartbeat from any person. By separating samples by subject, we can ensure that a significant variance in a single subject does not skew the entire model towards a particular result. 
 >
 > **Deliverable: Code to read data from training files.**
 > This is the function I derived.
@@ -465,8 +465,52 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > It is important to use leave-one-subject-out validation in scenarios where each individual subject might have a certain bias or method of conducting a behavior. Our device's claim is that we can return the heartrate for _any_ person. If we didn't use leave-one-subject-out, we might have samples from a single subject that exists in both the validation set and the training set. Because our goal is to create a model that can generalize, it would be an issue to mix subjects because the model might find some way of detecting the heartrate that is more dependent on the specific conditions of a subject rather than a general solution.
 >
-### Challenge 6: OOP Implementation
+> My benchmark that includes the execution of the test is in the below section.
+>
+### Challenge 6: OOP Implementation and the Final Benchmark
 >
 > I never not OOP'ed.
 >
+> In addition to the given methods...
+> - train_hr_model(directory)
+> - calc_hr(s, fs)
+> - test_hr_model(directory)
+>
+> I implemented calc_hr by taking the part of the heartbeat time calculation that finds the number of peaks above the threshold and transposing it into calc_hr.
+>
+> I also implemented the member functions...
+> - A constructor that assigns default values to a bunch of the fields we assign at runtime. Not doing this is a yikes moment.
+> - A method for rendering the Bland-Altman plot and calculating the specific parameters we use for the four key analysis.
+> 
+> With that done, we can now execute our test and conduct the four-key analysis...
+>
+> #### The Highly-Anticipated Moment: Benchmarking the Effectiveness of the ML Algorithm
+>
+> And, the results are in! Here is the final Bland-Altman plot of the test dataset following some minor tweaks of constants in the calc_hr algorithm...
+>
+> **TIME and FREQ Algorithms Bland-Altman**
+>
+> ![Image](fig/Lab5/NewVsOld.png)
+>
+> **ML Algorithm Bland-Altman**
+>
+> ![Image](fig/Lab5/MLIsBetter.png)
+>
+> We can already see immediate improvement, but let's delve deeper using actual statistics to quantify this improvement.
+>
+> **Four Key Analysis**
+>
+> Because the TIME algorithm was the best algorithm of our manually-made heartrate detection algorithms, I will compare our new machine learning model against it. The following is a table containing all of the pertinent statistics and analysis. 
+>
+> | Analyzing   | Metric Used                    | TIME Algorithm             | ML Algorithm               | Commentary                                                                                                                                                                                                                                                                                                                                                                           |
+> |-------------|--------------------------------|----------------------------|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | ACCURACY    | Root Mean  Squared Error       | 18.338                     | 6.148                      | And in the first part of our analysis, we can already see that the ML algorithm has a clear lead! Our ML algorithm yields a 298.26% increase in accuracy compared to our TIME algorithm. Even with just a small set of ten subjects, an ML solution is significantly better at dealing with edge cases than our manual model.                                                        |
+> | PRECISION   | 95% Standard  Deviation Bounds | UPPER: 35.84 LOWER: -36.04 | UPPER: 10.33 LOWER: -13.13 | Not only is the ML algorithm more accurate than the TIME algorithm, it is also more precise. The ML 95% standard deviation bounds are much smaller than the TIME bounds.                                                                                                                                                                                                             |
+> | BIAS        | Bias                           | -.1                        | -1.4                       | Interestingly, the TIME algorithm has less bias than the ML algorithm, but both skew below the mean. This is likely due to our dataset; Because  we gave the model a large amount of low-heartrate samples, the model might have learned to fit heartrate data in such a way that works well for low heartrate samples but does not generalize to higher heartrate samples.          |
+> | CORRELATION | R                              | .15                        | .87                        | This is perhaps the most intense comparison. Where our TIME algorithm had an R value of .15, our new ML algorithm returns an R value of .87. This is an incredible increase, and means our model correlates strongly with the trends of the benchmark data. We can rely on our ML algorithm to return a result that is lies in the realistic range of heartrate given a measurement. |
+>
+> In summary, our ML algorithm is **vastly superior** to our TIME algorithm. Our ML algorithm is _very good_ at calculating a precise heart rate when between 60-80 BPM, while a negative bias begins to show with higher values. This might be a consequence of our biased dataset. Overall, in most environments, ML is clearly the better option in terms of selecting an algorithm.
+>
+> Seeing the improvement was perhaps the most satisfying moment of this class to date. A perfect moment for the end of the class!
+
 [Return to Table of Contents](TableOfContents.md)

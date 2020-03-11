@@ -9,7 +9,7 @@ import glob
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.mixture import GaussianMixture as GMM
-
+from scipy.stats import pearsonr
 
 from HR import HR
 
@@ -19,6 +19,9 @@ class ML:
     def __init__(self):
         #self.hr = hr_instance
         self.hr = HR()
+        
+        # Constant: Test Freq
+        self.TEST_FREQUENCY = 50 # 50 hz
         
         # Initialize collections
         self.list_data = np.array([])
@@ -71,7 +74,7 @@ class ML:
                 
                 self.list_ref = np.append(self.list_ref, heartrate_ref)
     
-    # Trains the HR model using the dataset in the given directory.
+    # Trains the HR model using the given ids
     def train_hr_model(self, train_ids):
         train_data = np.array([])
         hold_out_data = np.array([])
@@ -101,7 +104,27 @@ class ML:
         analyzed_data = self.gmm.predict(s.reshape(-1,1))
         plt.plot(analyzed_data)
         plt.show()
-        return -1
+        
+        threshold = 0.5
+        goingUp = s[0] < threshold
+        crossings = 0
+        
+        #Count the number of times the signal crosses a threshold.
+        for i in range(s.size):
+            current_sample = s[i]
+            
+            if goingUp and current_sample > threshold:
+                goingUp = False
+                crossings = crossings + 1
+            else:
+                if not goingUp and current_sample < threshold:
+                    goingUp = True
+                    crossings = crossings + 1
+        
+        # Calculate the beats per minute.
+        time_to_get_samples = (1/fs) * s.size
+        
+        return ((crossings/2) * 60) / time_to_get_samples
     
     
     # Runs a test of the machine learning model using the data in the given directory.
@@ -113,8 +136,7 @@ class ML:
         self.list_test_data = np.array([])
         self.list_test_sub = np.array([])
         self.list_test_ref = np.array([])
-        
-        # print(unique_ids)
+        self.list_test_result = np.array([])
         
         for sub_id in unique_ids:
                 
@@ -130,22 +152,66 @@ class ML:
                 heartrate_data = self.filter_ml_data(heartrate_data)
                 
                 # Append to list_data. Slice off any additional values
-                if self.list_data.size > 0:
-                    self.list_data = np.vstack((self.list_data, heartrate_data[:500]))
+                if self.list_test_data.size > 0:
+                    self.list_test_data = np.vstack((self.list_test_data, heartrate_data[:500]))
                 else:
-                    self.list_data = heartrate_data[:500]
+                    self.list_test_data = heartrate_data[:500]
                 
                 # Append subject id to list_sub
-                self.list_sub = np.append(self.list_sub, int(sub_id))
+                self.list_test_sub = np.append(self.list_test_sub, int(sub_id))
                 
                 # Extract reference heartrate from file, then add to list_ref.
                 heartrate_ref_string = sub_file.split("_")
                 heartrate_ref = int(heartrate_ref_string[len(heartrate_ref_string) - 1].split(".")[0])
                 
-                self.list_ref = np.append(self.list_ref, heartrate_ref)
+                self.list_test_ref = np.append(self.list_test_ref, heartrate_ref)
                 
+                # Get Result
+                self.list_test_result = np.append(self.list_test_result, self.calc_hr( heartrate_data[:500], self.TEST_FREQUENCY ))
         
-        print("Done")
+        # Render plot
+        self.render_bland_altman_plot(self.list_test_ref, self.list_test_result)
+        
+
+    # Renders a Bland-Altman plot, where gnd is the known truths and est is the estimate from our algorithm.
+    def render_bland_altman_plot(self, gnd, est):
+        [R,p] = pearsonr(gnd,est)
+
+        plt.figure(1)
+        plt.clf()
+        plt.subplot(121)
+        plt.plot(gnd,gnd)
+        plt.scatter(gnd,est)
+        plt.text(min(gnd) + 2,max(est)+2,"R="+str(round(R,2)))
+        plt.ylabel("estimate HR (BPM)")
+        plt.xlabel("reference HR (BPM)")
+        
+        avg = (gnd + est) / 2 #take the average of gnd and est
+        dif = gnd - est #take the difference of gnd and est
+        std = np.std(dif) #get the standard deviation of the difference (using np.std)
+        bias = np.mean(dif) #the mean value of the difference
+        upper_std = bias + 1.96 * std #the bias plus 1.96 times the std
+        lower_std = bias - 1.96 * std #the bias minus 1.96 times the std
+        rmse = np.sqrt( np.mean( ( gnd - est ) ** 2 ))
+        
+        plt.subplot(122)
+        plt.scatter(avg, dif)
+        plt.plot([np.min(avg),np.max(avg)],[bias,bias])
+        plt.plot([np.min(avg),np.max(avg)],[upper_std, upper_std])
+        plt.plot([np.min(avg),np.max(avg)],[lower_std, lower_std])
+        plt.text(np.max(avg)+5,bias,"mean="+str(round(np.mean(gnd-est),2)))
+        plt.text(np.max(avg)+5,upper_std,"1.96STD="+str(round(upper_std,2)))
+        plt.text(np.max(avg)+5,lower_std,"-1.96STD="+str(round(lower_std,2)))
+        plt.ylabel("Difference of Est and Gnd (BPM)")
+        plt.xlabel("Average of Est and Gnd (BPM)")
+        plt.show()
+        
+        print("rmse: " + str(rmse))
+        print("std: " + str(std))
+        print("R: " + str(R))
+        print("bias: " + str(bias))
+        
+        
     
     # The filtering function for ML stuff
     def filter_ml_data(self, heartrate_data):
@@ -153,12 +219,13 @@ class ML:
         heartrate_data = self.hr.low_pass(heartrate_data, .065)
         heartrate_data = self.hr.normalize_signal(heartrate_data)
         return heartrate_data
-        
 
 ml = ML()
 
 ml.load_hr_data("ml_data\\training\\")
 ml.train_hr_model(ml.list_sub[0:10])
+ml.test_hr_model("ml_data\\testing\\")
+
 
 """
 directory = "ml_data/"
