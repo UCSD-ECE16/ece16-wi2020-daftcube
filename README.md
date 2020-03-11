@@ -11,6 +11,6 @@ Owen Bartolf's
  (Sponsored by Prof. Edward Wang's Hardware Emporium!)
 ```
 # Welcome!
-Welcome to the repository! There's a lot of good work here, but you might be looking for the [Table of Contents](fig/TableOfContents.md)
+Welcome to the repository! There's a lot of good work here, but you might be looking for the [Table of Contents](doc/TableOfContents.md)
 
 You might also be looking for the Grand Challenge, which can be found [here]() once finished.
