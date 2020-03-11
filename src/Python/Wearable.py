@@ -29,8 +29,12 @@ class Wearable:
         #end streaming
         self.connection.end_streaming()
         
-        # Return data read!
-        return self.connection.get_data_field().get_data()
+        # Return data read and reset!
+        data = self.connection.get_data_field().get_data()
+
+        self.connection.get_data_field().clear_data()
+
+        return data
 
     def main(self):
         
@@ -65,7 +69,7 @@ class Wearable:
             print("Please enter a command: ")
             command = input()
             if command == "READ":        
-                SAMPLES_TO_COLLECT = 1000
+                SAMPLES_TO_COLLECT = 500
                 
                 # RAW DATA
                 data_array = self.collect_data(SAMPLES_TO_COLLECT) #number of samples to collect
