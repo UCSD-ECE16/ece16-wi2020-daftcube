@@ -266,7 +266,7 @@ Prepared By: Owen Bartolf | 2/25/2020
 >
 > - **Incomplete Reading**: This issue is universal to our current methods of detecting a heartbeat. We assume that the sensor has a completely continuous reading of the data. If the subject removes his/her hand from the scanner, our algorithm does not know how to handle incomplete or discontinuous readings. We also don't provide an avenue of a graceful termination; it just gives an incorrect result.
 > - **Inconsistent Reading**: If the subject does not maintain a stable and light pressure on the sensor with their finger, our readings can have a moving average that is too wild to filter properly. While we can filter it, it introduces a lot of noise that can interfere with our algorithm's ability to extract meaning from the data.
-> - **Reading where Low Frequency Supercedes High Frequency Even Though High Frequency is More Reflective**:
+> - **Reading where Low Frequency Supercedes High Frequency Even Though High Frequency is More Reflective**: Sometimes, we get a weird situation where lower-frequency waves have a higher prominence in comparison to their higher-frequency counterparts, yet the higher-frequency waves are more representative of the actual heart rate we are trying to detect. While this can be handled with better signal processing, this situation seems highly dependent on the subject and environmental conditions. It would be difficult to create code manually to handle every edge case.
 >
 > **Q. Compare and contrast the two different algorithms. Which has a lower error? Which has a bias closer to 0? Do you see any signs of mean tracking in either algorithm? Use the correlation and difference plots to support your argument.**
 >
